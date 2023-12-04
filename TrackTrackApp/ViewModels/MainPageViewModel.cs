@@ -14,11 +14,13 @@ namespace TrackTrackApp.ViewModels
         public int Counter { get { return counter; } set { counter = value; OnPropertyChanged(); } }
         public ICommand OnCounterClicked { get; set; }
         public ICommand SignUpButton { get; protected set; }
+        public ICommand LoginButton { get; protected set; }
         public MainPageViewModel()
         {
             Counter = 0;
             OnCounterClicked = new Command(x => { Counter = Counter + 1;}) ;
             SignUpButton = new Command(async () => { await Shell.Current.GoToAsync("//SignUp"); });
+            LoginButton = new Command(async () => { await Shell.Current.GoToAsync("//Login"); });
         }
         
     }

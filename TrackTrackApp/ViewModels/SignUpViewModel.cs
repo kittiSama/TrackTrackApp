@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace TrackTrackApp.ViewModels
 {
@@ -16,9 +17,14 @@ namespace TrackTrackApp.ViewModels
 
         private string email;
         public string Email { get { return email; } set { email = value; OnPropertyChanged(); } }
+        public ICommand BackButton { get; protected set; }
+        public ICommand SignUpButton { get; protected set; }
+
 
         public SignUpViewModel()
         {
+            BackButton = new Command(async () => { await Shell.Current.GoToAsync("//MainPage"); });
+            //SignUpButton = new Command(async () => )
 
         }
 

@@ -42,6 +42,10 @@
                 Text="Sign Up"
                 Command="{Binding SignUpButton}" />
 
+            <Button
+                Text="Login"
+                Command="{Binding LoginButton}" />
+
         </VerticalStackLayout>
     </ScrollView>
 
