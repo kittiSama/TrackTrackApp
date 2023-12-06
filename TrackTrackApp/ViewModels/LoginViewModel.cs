@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace TrackTrackApp.ViewModels
 {
-    internal class LoginViewModel : ViewModel
+    public class LoginViewModel : ViewModel
     {
         private string username;
         public string Username { get { return username; } set { username = value; OnPropertyChanged(); } }

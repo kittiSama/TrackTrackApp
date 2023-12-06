@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TrackTrackApp.Services;
 
 namespace TrackTrackApp.ViewModels
 {
-    internal class SignUpViewModel:ViewModel
+    public class SignUpViewModel:ViewModel
     {
         private string username;
         public string Username { get {  return username; } set { username = value; OnPropertyChanged(); } }
@@ -18,13 +19,19 @@ namespace TrackTrackApp.ViewModels
         private string email;
         public string Email { get { return email; } set { email = value; OnPropertyChanged(); } }
         public ICommand BackButton { get; protected set; }
-        public ICommand SignUpButton { get; protected set; }
+        public ICommand SubmitButton { get; protected set; }
 
 
-        public SignUpViewModel()
+        public SignUpViewModel(TrackTrackServices service)
         {
             BackButton = new Command(async () => { await Shell.Current.GoToAsync("//MainPage"); });
-            //SignUpButton = new Command(async () => )
+            SubmitButton = new Command(async () => 
+            { 
+                var resp = await service.SignUp(username, password, email);
+                
+                if(resp==System.Net.HttpStatusCode.OK) { await Shell.Current.DisplayAlert("success", "success", "yes"); }
+                else { await Shell.Current.DisplayAlert("bad", "no", "sad"); }
+            });
 
         }
 

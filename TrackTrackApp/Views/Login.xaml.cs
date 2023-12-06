@@ -3,9 +3,9 @@ namespace TrackTrackApp.Views;
 
 public partial class Login : ContentPage
 {
-	public Login()
+	public Login(LoginViewModel vm)
 	{
 		InitializeComponent();
-		this.BindingContext = new LoginViewModel();
+		this.BindingContext = vm;
 	}
 }

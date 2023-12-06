@@ -46,6 +46,11 @@
                 Text="Login"
                 Command="{Binding LoginButton}" />
 
+            <Button
+                Text="Helo"
+                Command="{Binding HelloButton}" />
+
+
         </VerticalStackLayout>
     </ScrollView>
 

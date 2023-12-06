@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using TrackTrackApp.Services;
 using TrackTrackApp.ViewModels;
 using TrackTrackApp.Views;
 //using TrackTrackApp.Services;
@@ -28,7 +29,7 @@ namespace TrackTrackApp
             builder.Services.AddSingleton<Login>();
             builder.Services.AddSingleton<LoginViewModel>();
 
-
+            builder.Services.AddSingleton<TrackTrackServices>();
 
             Routing.RegisterRoute("MainPage", typeof(MainPage));
             return builder.Build();

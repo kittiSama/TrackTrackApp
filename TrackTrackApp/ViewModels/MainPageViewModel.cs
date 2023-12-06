@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TrackTrackApp.Services;
 
 namespace TrackTrackApp.ViewModels
 {
@@ -15,12 +16,20 @@ namespace TrackTrackApp.ViewModels
         public ICommand OnCounterClicked { get; set; }
         public ICommand SignUpButton { get; protected set; }
         public ICommand LoginButton { get; protected set; }
-        public MainPageViewModel()
+        public ICommand HelloButton { get; protected set; }
+        public MainPageViewModel(TrackTrackServices service)
         {
             Counter = 0;
             OnCounterClicked = new Command(x => { Counter = Counter + 1;}) ;
             SignUpButton = new Command(async () => { await Shell.Current.GoToAsync("//SignUp"); });
             LoginButton = new Command(async () => { await Shell.Current.GoToAsync("//Login"); });
+            HelloButton = new Command(async () =>
+            {
+                var resp = await service.Hello();
+
+                if (resp == System.Net.HttpStatusCode.OK) { await Shell.Current.DisplayAlert("success", "success", "yes"); }
+                else { await Shell.Current.DisplayAlert("bad", "no", "sad"); }
+            });
         }
         
     }

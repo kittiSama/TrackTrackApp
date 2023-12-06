@@ -3,9 +3,9 @@ namespace TrackTrackApp.Views;
 
 public partial class SignUp : ContentPage
 {
-	public SignUp()
+	public SignUp(SignUpViewModel vm)
 	{
 		InitializeComponent();
-		this.BindingContext = new SignUpViewModel();
+		this.BindingContext = vm;
 	}
 }

@@ -32,5 +32,10 @@
             />
         <Entry Text="{Binding Email}" />
 
+
+        <Button
+                Text="Submit"
+                Command="{Binding SubmitButton}" />
+
     </VerticalStackLayout>
 </ContentPage>
