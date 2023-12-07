@@ -36,8 +36,30 @@ namespace TrackTrackApp.Services
                 var response = await _httpClient.PostAsync(URL + "AddUser", stringContent);
                 return(response.StatusCode);
             }
-            catch (Exception ex) { return HttpStatusCode.BadRequest; }
+            catch { return HttpStatusCode.BadRequest; }
 
+        }
+
+        public async Task<HttpStatusCode> Login(string name, string password)
+        {
+            User user = new User() { Name = name, Password = password};
+            var stringContent = new StringContent(JsonSerializer.Serialize(user, _serializerOptions), Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await _httpClient.PostAsync(URL + "Login", stringContent);
+
+                await SecureStorage.Default.SetAsync("CurrentUser", await response.Content.ReadAsStringAsync());
+                return (response.StatusCode);
+            }
+            catch { return HttpStatusCode.BadRequest; }
+
+        }
+
+        public User GetSessionUser()
+        {
+            var u = SecureStorage.Default.GetAsync("CurrentUser");
+            return JsonSerializer.Deserialize<User>(u.Result, _serializerOptions);
         }
 
         public async Task<HttpStatusCode> Hello()

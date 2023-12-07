@@ -21,5 +21,15 @@
         Title="Login"
         ContentTemplate="{DataTemplate views:Login}"
         Route="Login" />
+    
+    <ShellContent
+        Title="UserMainPage"
+        ContentTemplate="{DataTemplate views:UserMainPage}"
+        Route="UserMainPage" />
+
+    <ShellContent
+        Title="SearchPage"
+        ContentTemplate="{DataTemplate views:SearchPage}"
+        Route="SearchPage" />
 
 </Shell>

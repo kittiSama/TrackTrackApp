@@ -28,6 +28,10 @@ namespace TrackTrackApp
             builder.Services.AddSingleton<SignUpViewModel>();
             builder.Services.AddSingleton<Login>();
             builder.Services.AddSingleton<LoginViewModel>();
+            builder.Services.AddSingleton<UserMainPage>();
+            builder.Services.AddSingleton<UserMainPageViewModel>();
+            builder.Services.AddSingleton<SearchPage>();
+            builder.Services.AddSingleton<SearchPageViewModel>();
 
             builder.Services.AddSingleton<TrackTrackServices>();
 
