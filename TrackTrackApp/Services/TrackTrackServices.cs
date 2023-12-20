@@ -56,6 +56,20 @@ namespace TrackTrackApp.Services
 
         }
 
+        public async Task<Album[]> QueryTop5(string q)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync(URL + "GetClosestAlbumsForApp" + "?q=" + q);
+                Album[] content = (Album[])(JsonSerializer.Deserialize(await response.Content.ReadAsStringAsync(), typeof(Album[]), _serializerOptions));
+                return (content);
+            }
+            catch
+            {
+                return (null);
+            }
+        }
+
         public User GetSessionUser()
         {
             var u = SecureStorage.Default.GetAsync("CurrentUser");
