@@ -8,5 +8,8 @@ public partial class SearchPage : ContentPage
 	{
 		InitializeComponent();
 		this.BindingContext = vm;
+		Loaded += vm.PopulateAlbums;
+		Loaded += vm.ResetQuery;
 	}
+	
 }

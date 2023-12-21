@@ -5,13 +5,36 @@
              Title="SearchPage"
              xmlns:models="clr-namespace:TrackTrackApp.Models"
              xmlns:viewModels="clr-namespace:TrackTrackApp.ViewModels"
-             x:DataType="viewModels:SearchPageViewModel">
+             x:DataType="viewModels:SearchPageViewModel"
+             x:Name="SearchPage">
     
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Label Text="{Binding Query}"/>
+        <Entry Text="{Binding NewQuery}"/>
+        <Button Text="Search" Command="{Binding SearchCommand}"/>
+        <CollectionView ItemsSource="{Binding Albums}" ItemsLayout="HorizontalList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Album">
+                    <Grid Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding ImageUrl}" Grid.Row="1" HeightRequest="250" WidthRequest="250" Grid.ColumnSpan="2"/>
+                        <Label Text="{Binding AlbumTitle}" Grid.Row="0" />
+                        <ImageButton Source="heart_icon.png" Grid.Row="2" HeightRequest="50" WidthRequest="50" 
+                                    Command="{Binding Source={x:Reference SearchPage}, Path=BindingContext.LikeAlbumCommand}"
+                                    CommandParameter="{Binding}"></ImageButton>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>
