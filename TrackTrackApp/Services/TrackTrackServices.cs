@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -74,6 +75,18 @@ namespace TrackTrackApp.Services
         {
             var u = SecureStorage.Default.GetAsync("CurrentUser");
             return JsonSerializer.Deserialize<User>(u.Result, _serializerOptions);
+        }
+
+        public async Task<HttpStatusCode> FavoriteAlbum(long albumID)
+        {
+            try
+            {
+                SavedAlbum z = new SavedAlbum() { AlbumId = albumID, UserId = GetSessionUser().Id };
+                var stringContent = new StringContent(JsonSerializer.Serialize(z,_serializerOptions), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(URL + "SaveAlbumByName", stringContent);
+                return (response.StatusCode);
+            }
+            catch { return HttpStatusCode.BadRequest; }
         }
 
         public async Task<HttpStatusCode> Hello()

@@ -39,6 +39,7 @@ namespace TrackTrackApp.ViewModels
 
         private bool LikeAlbumInternal(Album album)
         {
+
             //make the server save that album in the user's favorites
             //make the heart turn red or something, after receiving a 200OK from the server (it successfully saved the album)
             return true; 

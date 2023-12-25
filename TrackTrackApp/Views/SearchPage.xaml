@@ -6,7 +6,7 @@
              xmlns:models="clr-namespace:TrackTrackApp.Models"
              xmlns:viewModels="clr-namespace:TrackTrackApp.ViewModels"
              x:DataType="viewModels:SearchPageViewModel"
-             x:Name="SearchPage">
+             x:Name="thepage">
     
     <VerticalStackLayout>
         <Label 
@@ -30,7 +30,7 @@
                         <Image Source="{Binding ImageUrl}" Grid.Row="1" HeightRequest="250" WidthRequest="250" Grid.ColumnSpan="2"/>
                         <Label Text="{Binding AlbumTitle}" Grid.Row="0" />
                         <ImageButton Source="heart_icon.png" Grid.Row="2" HeightRequest="50" WidthRequest="50" 
-                                    Command="{Binding Source={x:Reference SearchPage}, Path=BindingContext.LikeAlbumCommand}"
+                                    Command="{Binding Source={x:Reference thepage}, Path=LikeAlbumCommand}"
                                     CommandParameter="{Binding}"></ImageButton>
                     </Grid>
                 </DataTemplate>
