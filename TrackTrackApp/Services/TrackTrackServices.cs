@@ -82,7 +82,8 @@ namespace TrackTrackApp.Services
             try
             {
                 SavedAlbum z = new SavedAlbum() { AlbumId = albumID, UserId = GetSessionUser().Id };
-                var stringContent = new StringContent(JsonSerializer.Serialize(z,_serializerOptions), Encoding.UTF8, "application/json");
+                SaveAlbumByNameDTO dto = new SaveAlbumByNameDTO() { collectionName = "favorites", savedAlbum = z };
+                var stringContent = new StringContent(JsonSerializer.Serialize(dto,_serializerOptions), Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(URL + "SaveAlbumByName", stringContent);
                 return (response.StatusCode);
             }

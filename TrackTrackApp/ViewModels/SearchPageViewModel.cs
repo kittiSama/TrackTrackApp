@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -33,17 +34,23 @@ namespace TrackTrackApp.ViewModels
             PopulateAlbums = new EventHandler(async (s,e) => Albums = await service.QueryTop5(query));
             ResetQuery = new EventHandler((s,e) => NewQuery = Query);
             SearchCommand = new Command(async () => Albums = await service.QueryTop5(newQuery));
-            LikeAlbumCommand = new Command(b => LikeAlbumInternal((Album)b));
+            LikeAlbumCommand = new Command(async b => await LikeAlbumInternal((long)b, service));
             
         }
 
-        private bool LikeAlbumInternal(Album album)
+        private async Task LikeAlbumInternal(long albumid, TrackTrackServices service)
         {
+            var resp = await service.FavoriteAlbum(albumid);
 
+
+            if(resp == HttpStatusCode.OK)
+            {
+                await Shell.Current.DisplayAlert("success", "success", "yes");
+            }
             //make the server save that album in the user's favorites
             //make the heart turn red or something, after receiving a 200OK from the server (it successfully saved the album)
-            return true; 
         }
+
 
     }
 }
