@@ -15,5 +15,7 @@ namespace TrackTrackApp.Models
         public string AlbumTitle { get; set; }
 
         public string ArtistName { get; set; }
+
+       
     }
 }

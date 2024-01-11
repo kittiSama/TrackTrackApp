@@ -71,19 +71,24 @@ namespace TrackTrackApp.Services
             }
         }
 
-        public User GetSessionUser()
+        public async Task<User> GetSessionUser()
         {
-            var u = SecureStorage.Default.GetAsync("CurrentUser");
-            return JsonSerializer.Deserialize<User>(u.Result, _serializerOptions);
+            var u = await SecureStorage.Default.GetAsync("CurrentUser");
+            User user = JsonSerializer.Deserialize<User>(u, _serializerOptions);
+            return user;
         }
 
         public async Task<HttpStatusCode> FavoriteAlbum(long albumID)
         {
             try
             {
-                SavedAlbum z = new SavedAlbum() { AlbumId = albumID, UserId = GetSessionUser().Id };
+                SavedAlbum z = new SavedAlbum();
+                z.AlbumId = albumID;
+                var user = await GetSessionUser();
+                z.UserId = user.Id;
                 SaveAlbumByNameDTO dto = new SaveAlbumByNameDTO() { collectionName = "favorites", savedAlbum = z };
-                var stringContent = new StringContent(JsonSerializer.Serialize(dto,_serializerOptions), Encoding.UTF8, "application/json");
+                string json = JsonSerializer.Serialize(dto, _serializerOptions);
+                var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(URL + "SaveAlbumByName", stringContent);
                 return (response.StatusCode);
             }

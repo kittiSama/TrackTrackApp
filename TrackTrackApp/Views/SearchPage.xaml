@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TrackTrackApp.Views.SearchPage"
-             Title="SearchPage"
-             xmlns:models="clr-namespace:TrackTrackApp.Models"
-             xmlns:viewModels="clr-namespace:TrackTrackApp.ViewModels"
-             x:DataType="viewModels:SearchPageViewModel"
-             x:Name="thepage">
-    
+<ContentPage
+    x:Class="TrackTrackApp.Views.SearchPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:TrackTrackApp.Models"
+    xmlns:viewModels="clr-namespace:TrackTrackApp.ViewModels"
+    x:Name="thepage"
+    Title="SearchPage"
+    x:DataType="viewModels:SearchPageViewModel">
+
     <VerticalStackLayout>
-        <Label 
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Entry Text="{Binding NewQuery}"/>
-        <Button Text="Search" Command="{Binding SearchCommand}"/>
-        <CollectionView ItemsSource="{Binding Albums}" ItemsLayout="HorizontalList">
+        <Label HorizontalOptions="Center" VerticalOptions="Center" />
+        <Entry Text="{Binding NewQuery}" />
+        <Button Command="{Binding SearchCommand}" Text="Search" />
+        <CollectionView
+            x:Name="mCollectionView"
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding Albums}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Album">
                     <Grid Padding="10">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding ImageUrl}" Grid.Row="1" HeightRequest="250" WidthRequest="250" Grid.ColumnSpan="2"/>
-                        <Label Text="{Binding AlbumTitle}" Grid.Row="0" />
-                        <ImageButton Source="heart_icon.png" Grid.Row="2" HeightRequest="50" WidthRequest="50" 
-                                    CommandParameter="{Binding AlbumID}"
-                                    Command="{Binding Source={x:Reference thepage}, Path=LikeAlbumCommand}"
-                                    ></ImageButton>
+                        <Image
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            HeightRequest="250"
+                            Source="{Binding ImageUrl}"
+                            WidthRequest="250" />
+                        <Label Grid.Row="0" Text="{Binding AlbumTitle}" />
+                        <ImageButton
+                            Grid.Row="2"
+                            Command="{Binding Source={Reference mCollectionView}, Path=BindingContext.LikeAlbumCommand}"
+                            CommandParameter="{Binding AlbumID}"
+                            HeightRequest="50"
+                            Source="heart_icon.png"
+                            WidthRequest="50" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

@@ -23,5 +23,12 @@ namespace TrackTrackApp.Models
         public virtual Collection Collection { get; set; } = null!;
 
         public virtual User User { get; set; } = null!;
+
+        public SavedAlbum()
+        {
+            Collection = new Collection();
+            User = new User();
+            Rating = 0;
+        }
     }
 }

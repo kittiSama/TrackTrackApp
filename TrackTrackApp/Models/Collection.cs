@@ -12,10 +12,19 @@ namespace TrackTrackApp.Models
 
         public long OwnerId { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
 
-        public virtual User Owner { get; set; } = null!;
+        public virtual User Owner { get; set; }
 
         public virtual ICollection<SavedAlbum> SavedAlbums { get; set; } = new List<SavedAlbum>();
+
+        public Collection()
+        {
+            SavedAlbums = new List<SavedAlbum>();
+            Id = 0;
+            OwnerId = 0;
+            Name = "";
+            Owner = new User();
+        }
     }
 }
