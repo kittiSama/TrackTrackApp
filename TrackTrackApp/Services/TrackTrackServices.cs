@@ -14,7 +14,7 @@ namespace TrackTrackApp.Services
     {
         readonly HttpClient _httpClient;
         readonly JsonSerializerOptions _serializerOptions;
-        const string URL = @"https://fbjg3s2d-7247.euw.devtunnels.ms/TrackTrack/";
+        const string URL = @"https://hln4n3n5-7247.uks1.devtunnels.ms/TrackTrack/";
 
         public TrackTrackServices()
         {
@@ -85,7 +85,7 @@ namespace TrackTrackApp.Services
                 SavedAlbum z = new SavedAlbum();
                 z.AlbumId = albumID;
                 var user = await GetSessionUser();
-                z.UserId = user.Id;
+                z.User = user;
                 SaveAlbumByNameDTO dto = new SaveAlbumByNameDTO() { collectionName = "favorites", savedAlbum = z };
                 string json = JsonSerializer.Serialize(dto, _serializerOptions);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");

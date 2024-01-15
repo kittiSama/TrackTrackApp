@@ -18,7 +18,7 @@
             ItemsLayout="HorizontalList"
             ItemsSource="{Binding Albums}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Album">
+                <DataTemplate x:DataType="models:albumandheart">
                     <Grid Padding="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -33,15 +33,15 @@
                             Grid.Row="1"
                             Grid.ColumnSpan="2"
                             HeightRequest="250"
-                            Source="{Binding ImageUrl}"
+                            Source="{Binding album.ImageUrl}"
                             WidthRequest="250" />
-                        <Label Grid.Row="0" Text="{Binding AlbumTitle}" />
+                        <Label Grid.Row="0" Text="{Binding album.AlbumTitle}" />
                         <ImageButton
                             Grid.Row="2"
                             Command="{Binding Source={Reference mCollectionView}, Path=BindingContext.LikeAlbumCommand}"
-                            CommandParameter="{Binding AlbumID}"
+                            CommandParameter="{Binding}"
                             HeightRequest="50"
-                            Source="heart_icon.png"
+                            Source="{Binding image}"
                             WidthRequest="50" />
                     </Grid>
                 </DataTemplate>

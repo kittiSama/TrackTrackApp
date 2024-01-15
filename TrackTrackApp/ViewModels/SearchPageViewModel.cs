@@ -21,8 +21,8 @@ namespace TrackTrackApp.ViewModels
         private string newQuery;
         public string NewQuery { get { return newQuery; } set { newQuery = value; OnPropertyChanged(); } }
 
-        private Album[] albums;
-        public Album[] Albums { get { return albums; } set { albums = value; OnPropertyChanged(); } }
+        private albumandheart[] albums;
+        public albumandheart[] Albums { get { return albums; } set { albums = value; OnPropertyChanged(); } }
 
         public EventHandler PopulateAlbums { get; set; }
         public EventHandler ResetQuery { get; set; }
@@ -31,22 +31,36 @@ namespace TrackTrackApp.ViewModels
 
         public SearchPageViewModel(TrackTrackServices service)
         {
-            PopulateAlbums = new EventHandler(async (s,e) => Albums = await service.QueryTop5(query));
+            albums = new albumandheart[5];
+            PopulateAlbums = new EventHandler(async (s, e) =>
+                {
+                    //death
+                    var arr = await service.QueryTop5(query);
+                    for (int i = 0; i < arr.Length; i++) { Albums[i] = new albumandheart { album = arr[i], image = "heart_icon.png" }; OnPropertyChanged(); }
+                });
             ResetQuery = new EventHandler((s,e) => NewQuery = Query);
-            SearchCommand = new Command(async () => Albums = await service.QueryTop5(newQuery));
-            LikeAlbumCommand = new Command(async b => await LikeAlbumInternal((long)b, service));
+                SearchCommand = new Command(async () =>
+                {
+                    var arr = await service.QueryTop5(query);
+                    for (int i = 0; i < arr.Length; i++) { Albums[i] = new albumandheart { album = arr[i], image = "heart_icon.png" }; OnPropertyChanged(); }
+                });
+            LikeAlbumCommand = new Command(async b => await LikeAlbumInternal((albumandheart)b, service));
             
         }
 
-        private async Task LikeAlbumInternal(long albumid, TrackTrackServices service)
+
+
+        private async Task LikeAlbumInternal(albumandheart al, TrackTrackServices service)
         {
-            var resp = await service.FavoriteAlbum(albumid);
+            var resp = await service.FavoriteAlbum(al.album.AlbumID);
 
 
             if(resp == HttpStatusCode.OK)
             {
                 await Shell.Current.DisplayAlert("success", "success", "yes");
+                al.image = "heart_icon_happy.png";
             }
+
             //make the server save that album in the user's favorites
             //make the heart turn red or something, after receiving a 200OK from the server (it successfully saved the album)
         }
