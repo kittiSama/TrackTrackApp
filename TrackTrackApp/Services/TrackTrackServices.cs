@@ -57,13 +57,28 @@ namespace TrackTrackApp.Services
 
         }
 
-        public async Task<Album[]> QueryTop5(string q)
+        public async Task<albumandheart[]> QueryTop5(string q)
         {
             try
             {
                 var response = await _httpClient.GetAsync(URL + "GetClosestAlbumsForApp" + "?q=" + q);
                 Album[] content = (Album[])(JsonSerializer.Deserialize(await response.Content.ReadAsStringAsync(), typeof(Album[]), _serializerOptions));
-                return (content);
+                albumandheart[] toReturn = new albumandheart[content.Length]; // the line below doesnt even penetrate ino the server fix it
+                List<SavedAlbum> allSaved = JsonSerializer.Deserialize<List<SavedAlbum>>(await (await _httpClient.GetAsync(URL + "GetAlbumsInCollectionByName" + "?userId=" + GetSessionUser().Result.Id + "&collectionName=" + "favorites" )).Content.ReadAsStringAsync(),_serializerOptions);
+                for (int i = 0; i < content.Length; i++)
+                {
+                    toReturn[i] = new albumandheart();
+                    toReturn[i].album = content[i];
+                    if (allSaved.Where(x=> x.Equals(content[i])).Any())
+                    {
+                        toReturn[i].image = "heart_icon.png";
+                    }
+                    else
+                    {
+                        toReturn[i].image = "heart_icon_happy.png";
+                    }
+                }
+                return (toReturn);
             }
             catch
             {
@@ -78,7 +93,7 @@ namespace TrackTrackApp.Services
             return user;
         }
 
-        public async Task<HttpStatusCode> FavoriteAlbum(long albumID)
+        public async Task<HttpResponseMessage> FavoriteAlbum(long albumID)
         {
             try
             {
@@ -90,9 +105,9 @@ namespace TrackTrackApp.Services
                 string json = JsonSerializer.Serialize(dto, _serializerOptions);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(URL + "SaveAlbumByName", stringContent);
-                return (response.StatusCode);
+                return (response);
             }
-            catch { return HttpStatusCode.BadRequest; }
+            catch { return null; }
         }
 
         public async Task<HttpStatusCode> Hello()

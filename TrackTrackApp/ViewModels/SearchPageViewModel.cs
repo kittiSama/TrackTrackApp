@@ -35,22 +35,22 @@ namespace TrackTrackApp.ViewModels
             PopulateAlbums = new EventHandler(async (s, e) =>
                 {
                     //death
-                    Albums = new ObservableCollection<albumandheart>();
+                    Albums = new ObservableCollection<albumandheart>(new albumandheart[5]);
                     var arr = await service.QueryTop5(query);
                     for (int i = 0; i < arr.Length; i++) 
                     {
-                        Albums.Add(new albumandheart { album = arr[i], image = "heart_icon.png" }); 
+                        Albums[i] = arr[i]; 
                     }
                 });
 
             ResetQuery = new EventHandler((s,e) => NewQuery = Query);
             SearchCommand = new Command(async () =>
             {
-                Albums = new ObservableCollection<albumandheart>();
-                var arr = await service.QueryTop5(query);
+                Albums = new ObservableCollection<albumandheart>(new albumandheart[5]);
+                var arr = await service.QueryTop5(NewQuery);
                 for (int i = 0; i < arr.Length; i++)
                 {
-                    Albums.Add(new albumandheart { album = arr[i], image = "heart_icon.png" });
+                    Albums[i] = arr[i];
                 }
             });
             LikeAlbumCommand = new Command(async b => await LikeAlbumInternal((albumandheart)b, service));
@@ -63,8 +63,19 @@ namespace TrackTrackApp.ViewModels
         {
             var resp = await service.FavoriteAlbum(al.album.AlbumID);
 
+            if (resp.StatusCode == HttpStatusCode.Accepted)
+            {
+                await Shell.Current.DisplayAlert("deleted", "success", "yes");
+                for (int i = 0; i < Albums.Count; i++)
+                {
+                    if (Albums[i].Equals(al))
+                    {
+                        Albums[i] = new albumandheart() { album = Albums[i].album, image = "heart_icon.png" };
+                    }
+                }
+            }
 
-            if(resp == HttpStatusCode.OK)
+            if (resp.StatusCode == HttpStatusCode.OK)
             {
                 await Shell.Current.DisplayAlert("success", "success", "yes");
                 for (int i = 0; i < Albums.Count; i++)
@@ -74,6 +85,8 @@ namespace TrackTrackApp.ViewModels
                         Albums[i] = new albumandheart() { album = Albums[i].album, image = "heart_icon_happy.png" };
                     }
                 }
+
+                
             }
 
             //make the server save that album in the user's favorites
