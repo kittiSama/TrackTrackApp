@@ -63,19 +63,20 @@ namespace TrackTrackApp.Services
             {
                 var response = await _httpClient.GetAsync(URL + "GetClosestAlbumsForApp" + "?q=" + q);
                 Album[] content = (Album[])(JsonSerializer.Deserialize(await response.Content.ReadAsStringAsync(), typeof(Album[]), _serializerOptions));
-                albumandheart[] toReturn = new albumandheart[content.Length]; // the line below doesnt even penetrate ino the server fix it
-                List<SavedAlbum> allSaved = JsonSerializer.Deserialize<List<SavedAlbum>>(await (await _httpClient.GetAsync(URL + "GetAlbumsInCollectionByName" + "?userId=" + GetSessionUser().Result.Id + "&collectionName=" + "favorites" )).Content.ReadAsStringAsync(),_serializerOptions);
+                albumandheart[] toReturn = new albumandheart[content.Length]; 
+                string user = ((await GetSessionUser()).Id).ToString(); //something here doesnt work, could also be in the server
+                List<SavedAlbum> allSaved = JsonSerializer.Deserialize<List<SavedAlbum>>(await (await _httpClient.GetAsync(URL + "GetAlbumsInCollectionByName" + "?userId=" + user + "&collectionName=" + "favorites" )).Content.ReadAsStringAsync(),_serializerOptions);
                 for (int i = 0; i < content.Length; i++)
                 {
                     toReturn[i] = new albumandheart();
                     toReturn[i].album = content[i];
-                    if (allSaved.Where(x=> x.Equals(content[i])).Any())
+                    if ((allSaved.Where(x=> x.Id == content[i].AlbumID)).Any())
                     {
-                        toReturn[i].image = "heart_icon.png";
+                        toReturn[i].image = "heart_icon_happy.png";
                     }
                     else
                     {
-                        toReturn[i].image = "heart_icon_happy.png";
+                        toReturn[i].image = "heart_icon.png";
                     }
                 }
                 return (toReturn);
