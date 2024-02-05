@@ -33,17 +33,17 @@ namespace TrackTrackApp.ViewModels
         public SearchPageViewModel(TrackTrackServices service)
         {
             PopulateAlbums = new EventHandler(async (s, e) =>
+            {
+                Albums = new ObservableCollection<albumandheart>(new albumandheart[5]);
+                var arr = await service.QueryTop5(query);
+                for (int i = 0; i < arr.Length; i++) 
                 {
-                    //death
-                    Albums = new ObservableCollection<albumandheart>(new albumandheart[5]);
-                    var arr = await service.QueryTop5(query);
-                    for (int i = 0; i < arr.Length; i++) 
-                    {
-                        Albums[i] = arr[i]; 
-                    }
-                });
+                    Albums[i] = arr[i]; 
+                }
+            });
 
             ResetQuery = new EventHandler((s,e) => NewQuery = Query);
+
             SearchCommand = new Command(async () =>
             {
                 Albums = new ObservableCollection<albumandheart>(new albumandheart[5]);
@@ -53,6 +53,7 @@ namespace TrackTrackApp.ViewModels
                     Albums[i] = arr[i];
                 }
             });
+
             LikeAlbumCommand = new Command(async b => await LikeAlbumInternal((albumandheart)b, service));
             
         }
