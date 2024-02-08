@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrackTrackApp.Models
 {
-    public class albumandheart
+    public class AlbumAndHeart
     {
         public Album album { get; set;}
 

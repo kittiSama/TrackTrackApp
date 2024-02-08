@@ -57,13 +57,13 @@ namespace TrackTrackApp.Services
 
         }
 
-        public async Task<albumandheart[]> QueryTop5(string q)
+        public async Task<AlbumAndHeart[]> QueryTop5(string q)
         {
             try
             {
                 var response = await _httpClient.GetAsync(URL + "GetClosestAlbumsForApp" + "?q=" + q);
-                Album[] content = (Album[])(JsonSerializer.Deserialize(await response.Content.ReadAsStringAsync(), typeof(Album[]), _serializerOptions));
-                albumandheart[] toReturn = new albumandheart[content.Length];  // i changed everything makje it work :))))
+                AlbumAndHeart[] content = (AlbumAndHeart[])(JsonSerializer.Deserialize(await response.Content.ReadAsStringAsync(), typeof(AlbumAndHeart[]), _serializerOptions));
+                //AlbumAndHeart[] toReturn = new AlbumAndHeart[content.Length];  // i changed everything makje it work :))))
                 //string user = ((await GetSessionUser()).Id).ToString(); //something here doesnt work, could also be in the server
                 //List<SavedAlbum> allSaved = JsonSerializer.Deserialize<List<SavedAlbum>>(await (await _httpClient.GetAsync(URL + "GetAlbumsInCollectionByName" + "?userId=" + user + "&collectionName=" + "favorites" )).Content.ReadAsStringAsync(),_serializerOptions);
                 //for (int i = 0; i < content.Length; i++)
@@ -79,7 +79,7 @@ namespace TrackTrackApp.Services
                 //        toReturn[i].image = "heart_icon.png";
                 //    }
                 //}
-                return (toReturn);
+                return (content);
             }
             catch
             {
@@ -100,8 +100,6 @@ namespace TrackTrackApp.Services
             {
                 SavedAlbum z = new SavedAlbum();
                 z.AlbumId = albumID;
-                var user = await GetSessionUser();
-                z.User = user;
                 SaveAlbumByNameDTO dto = new SaveAlbumByNameDTO() { collectionName = "favorites", savedAlbum = z };
                 string json = JsonSerializer.Serialize(dto, _serializerOptions);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");

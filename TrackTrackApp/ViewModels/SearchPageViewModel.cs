@@ -22,8 +22,8 @@ namespace TrackTrackApp.ViewModels
         private string newQuery;
         public string NewQuery { get { return newQuery; } set { newQuery = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<albumandheart> albums;
-        public ObservableCollection<albumandheart> Albums { get { return albums; } set { albums = value; OnPropertyChanged("Albums"); } }
+        private ObservableCollection<AlbumAndHeart> albums;
+        public ObservableCollection<AlbumAndHeart> Albums { get { return albums; } set { albums = value; OnPropertyChanged("Albums"); } }
 
         public EventHandler PopulateAlbums { get; set; }
         public EventHandler ResetQuery { get; set; }
@@ -34,7 +34,7 @@ namespace TrackTrackApp.ViewModels
         {
             PopulateAlbums = new EventHandler(async (s, e) =>
             {
-                Albums = new ObservableCollection<albumandheart>(new albumandheart[5]);
+                Albums = new ObservableCollection<AlbumAndHeart>(new AlbumAndHeart[5]);
                 var arr = await service.QueryTop5(query);
                 for (int i = 0; i < arr.Length; i++) 
                 {
@@ -46,7 +46,7 @@ namespace TrackTrackApp.ViewModels
 
             SearchCommand = new Command(async () =>
             {
-                Albums = new ObservableCollection<albumandheart>(new albumandheart[5]);
+                Albums = new ObservableCollection<AlbumAndHeart>(new AlbumAndHeart[5]);
                 var arr = await service.QueryTop5(NewQuery);
                 for (int i = 0; i < arr.Length; i++)
                 {
@@ -54,13 +54,13 @@ namespace TrackTrackApp.ViewModels
                 }
             });
 
-            LikeAlbumCommand = new Command(async b => await LikeAlbumInternal((albumandheart)b, service));
+            LikeAlbumCommand = new Command(async b => await LikeAlbumInternal((AlbumAndHeart)b, service));
             
         }
 
 
 
-        private async Task LikeAlbumInternal(albumandheart al, TrackTrackServices service)
+        private async Task LikeAlbumInternal(AlbumAndHeart al, TrackTrackServices service)
         {
             var resp = await service.FavoriteAlbum(al.album.AlbumID);
 
@@ -71,7 +71,7 @@ namespace TrackTrackApp.ViewModels
                 {
                     if (Albums[i].Equals(al))
                     {
-                        Albums[i] = new albumandheart() { album = Albums[i].album, image = "heart_icon.png" };
+                        Albums[i] = new AlbumAndHeart() { album = Albums[i].album, image = "heart_icon.png" };
                     }
                 }
             }
@@ -83,7 +83,7 @@ namespace TrackTrackApp.ViewModels
                 {
                     if (Albums[i].Equals(al))
                     {
-                        Albums[i] = new albumandheart() { album = Albums[i].album, image = "heart_icon_happy.png" };
+                        Albums[i] = new AlbumAndHeart() { album = Albums[i].album, image = "heart_icon_happy.png" };
                     }
                 }
 
