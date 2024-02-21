@@ -16,6 +16,9 @@ namespace TrackTrackApp.ViewModels
     [QueryProperty("Query", "q")]
     public class SearchPageViewModel:ViewModel
     {
+        const string ONHEART = "heart_icon_happy.png";
+        const string OFFHEART = "heart_icon.png";
+
         private string query;
         public string Query {  get { return query; } set {  query = value; OnPropertyChanged(); } }
 
@@ -62,36 +65,34 @@ namespace TrackTrackApp.ViewModels
 
         private async Task LikeAlbumInternal(AlbumAndHeart al, TrackTrackServices service)
         {
-            var resp = await service.FavoriteAlbum(al.album.AlbumID);
-
-            if (resp.StatusCode == HttpStatusCode.Accepted)
+            if (al.image == ONHEART)
             {
-                await Shell.Current.DisplayAlert("deleted", "success", "yes");
-                for (int i = 0; i < Albums.Count; i++)
+                if(await service.UnfavoriteAlbum(al.album.AlbumID))
                 {
-                    if (Albums[i].Equals(al))
+                    for (int i = 0; i < Albums.Count; i++)
                     {
-                        Albums[i] = new AlbumAndHeart() { album = Albums[i].album, image = "heart_icon.png" };
+                        if (Albums[i].Equals(al))
+                        {
+                            Albums[i] = new AlbumAndHeart() { album = Albums[i].album, image = OFFHEART };
+                        }
+                    }
+                }
+            }
+            if(al.image == OFFHEART)
+            {
+                if(await service.FavoriteAlbum(al.album.AlbumID))
+                {
+                    for (int i = 0; i < Albums.Count; i++)
+                    {
+                        if (Albums[i].Equals(al))
+                        {
+                            Albums[i] = new AlbumAndHeart() { album = Albums[i].album, image = ONHEART };
+                        }
                     }
                 }
             }
 
-            if (resp.StatusCode == HttpStatusCode.OK)
-            {
-                await Shell.Current.DisplayAlert("success", "success", "yes");
-                for (int i = 0; i < Albums.Count; i++)
-                {
-                    if (Albums[i].Equals(al))
-                    {
-                        Albums[i] = new AlbumAndHeart() { album = Albums[i].album, image = "heart_icon_happy.png" };
-                    }
-                }
 
-                
-            }
-
-            //make the server save that album in the user's favorites
-            //make the heart turn red or something, after receiving a 200OK from the server (it successfully saved the album)
         }
 
 

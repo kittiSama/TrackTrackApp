@@ -35,7 +35,8 @@ namespace TrackTrackApp.Services
             try
             {
                 var response = await _httpClient.PostAsync(URL + "AddUser", stringContent);
-                return(response.StatusCode);
+                await Login(name, password);
+                return (response.StatusCode);
             }
             catch { return HttpStatusCode.BadRequest; }
 
@@ -94,7 +95,7 @@ namespace TrackTrackApp.Services
             return user;
         }
 
-        public async Task<HttpResponseMessage> FavoriteAlbum(long albumID)
+        public async Task<bool> FavoriteAlbum(long albumID)
         {
             try
             {
@@ -104,10 +105,27 @@ namespace TrackTrackApp.Services
                 string json = JsonSerializer.Serialize(dto, _serializerOptions);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(URL + "SaveAlbumByName", stringContent);
-                return (response);
+                if(response.IsSuccessStatusCode) { return true; }
+                return false;
             }
-            catch { return null; }
+            catch { return false; }
         }
+        public async Task<bool> UnfavoriteAlbum(long albumID)
+        {
+            try
+            {
+                SavedAlbum z = new SavedAlbum();
+                z.AlbumId = albumID;
+                SaveAlbumByNameDTO dto = new SaveAlbumByNameDTO() { collectionName = "favorites", savedAlbum = z };
+                string json = JsonSerializer.Serialize(dto, _serializerOptions);
+                var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(URL + "SaveAlbumByName", stringContent);
+                if (response.IsSuccessStatusCode) { return true; }
+                return false;
+            }
+            catch { return false; }
+        }
+
 
         public async Task<HttpStatusCode> Hello()
         {
