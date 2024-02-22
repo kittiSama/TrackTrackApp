@@ -11,7 +11,6 @@ namespace TrackTrackApp.ViewModels
 {
     public class MainPageViewModel:ViewModel
     {
-        public ICommand OnCounterClicked { get; set; }
         public ICommand SignUpButton { get; protected set; }
         public ICommand LoginButton { get; protected set; }
         public MainPageViewModel(TrackTrackServices service)

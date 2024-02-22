@@ -32,9 +32,12 @@ namespace TrackTrackApp.ViewModels
         public EventHandler ResetQuery { get; set; }
         public ICommand SearchCommand {  get; set; }
         public ICommand LikeAlbumCommand {  get; set; }
+        public ICommand BackButton { get; set; }
 
         public SearchPageViewModel(TrackTrackServices service)
         {
+            BackButton = new Command(async () => { await Shell.Current.GoToAsync("//UserMainPage"); });
+
             PopulateAlbums = new EventHandler(async (s, e) =>
             {
                 Albums = new ObservableCollection<AlbumAndHeart>(new AlbumAndHeart[5]);

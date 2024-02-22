@@ -10,6 +10,7 @@
     x:DataType="viewModels:SearchPageViewModel">
 
     <VerticalStackLayout>
+        <Button Command="{Binding BackButton}" Text="Go Back" />
         <Label HorizontalOptions="Center" VerticalOptions="Center" />
         <Entry Text="{Binding NewQuery}" />
         <Button Command="{Binding SearchCommand}" Text="Search" />
