@@ -10,6 +10,7 @@ public partial class SearchPage : ContentPage
 		this.BindingContext = vm;
 
 		Appearing += vm.PopulateAlbums;
+		Loaded += vm.PopulateAlbums;
 		Appearing += vm.ResetQuery;
 	}
 	

@@ -16,6 +16,7 @@
         <Button Command="{Binding SearchCommand}" Text="Search" />
         <CollectionView
             x:Name="mCollectionView"
+            EmptyView="No items match your search"
             ItemsLayout="HorizontalList"
             ItemsSource="{Binding Albums}">
             <CollectionView.ItemTemplate>

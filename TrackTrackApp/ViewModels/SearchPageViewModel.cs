@@ -41,10 +41,13 @@ namespace TrackTrackApp.ViewModels
             PopulateAlbums = new EventHandler(async (s, e) =>
             {
                 Albums = new ObservableCollection<AlbumAndHeart>(new AlbumAndHeart[5]);
-                var arr = await service.QueryTop5(query);
-                for (int i = 0; i < arr.Length; i++) 
+                var arr = await service.QueryTop5(Query);
+                if(arr!= null)
                 {
-                    Albums[i] = arr[i]; 
+                    for (int i = 0; i < arr.Length; i++)
+                    {
+                        Albums[i] = arr[i];
+                    }
                 }
             });
 
@@ -54,9 +57,12 @@ namespace TrackTrackApp.ViewModels
             {
                 Albums = new ObservableCollection<AlbumAndHeart>(new AlbumAndHeart[5]);
                 var arr = await service.QueryTop5(NewQuery);
-                for (int i = 0; i < arr.Length; i++)
+                if( arr!= null)
                 {
-                    Albums[i] = arr[i];
+                    for (int i = 0; i < arr.Length; i++)
+                    {
+                        Albums[i] = arr[i];
+                    }
                 }
             });
 
