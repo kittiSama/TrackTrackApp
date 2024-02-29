@@ -15,5 +15,7 @@
         <Label Text="Search album:" />
         <SearchBar SearchCommand="{Binding QuerySubmitButton}" Text="{Binding Query}" />
 
+        <Button Command="{Binding DatapageButton}" Text="View data" />
+
     </VerticalStackLayout>
 </ContentPage>

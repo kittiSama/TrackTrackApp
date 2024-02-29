@@ -11,17 +11,17 @@
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-    
+
     <ShellContent
         Title="Sign Up"
         ContentTemplate="{DataTemplate views:SignUp}"
         Route="SignUp" />
-    
+
     <ShellContent
         Title="Login"
         ContentTemplate="{DataTemplate views:Login}"
         Route="Login" />
-    
+
     <ShellContent
         Title="UserMainPage"
         ContentTemplate="{DataTemplate views:UserMainPage}"
@@ -31,5 +31,10 @@
         Title="SearchPage"
         ContentTemplate="{DataTemplate views:SearchPage}"
         Route="SearchPage" />
+
+    <ShellContent
+        Title="DataPage"
+        ContentTemplate="{DataTemplate views:DataPage}"
+        Route="DataPage" />
 
 </Shell>

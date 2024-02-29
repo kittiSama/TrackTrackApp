@@ -2,6 +2,7 @@
 using TrackTrackApp.Services;
 using TrackTrackApp.ViewModels;
 using TrackTrackApp.Views;
+using Microcharts.Maui;
 //using TrackTrackApp.Services;
 
 namespace TrackTrackApp
@@ -13,6 +14,7 @@ namespace TrackTrackApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMicrocharts()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -32,6 +34,8 @@ namespace TrackTrackApp
             builder.Services.AddSingleton<UserMainPageViewModel>();
             builder.Services.AddSingleton<SearchPage>();
             builder.Services.AddSingleton<SearchPageViewModel>();
+            builder.Services.AddSingleton<DataPage>();
+            builder.Services.AddSingleton<DataPageViewModel>();
 
             builder.Services.AddSingleton<TrackTrackServices>();
 
