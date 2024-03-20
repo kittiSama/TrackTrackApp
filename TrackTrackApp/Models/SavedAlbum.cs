@@ -19,6 +19,7 @@ namespace TrackTrackApp.Models
         public DateTime Date { get; set; }
 
         public long? Rating { get; set; }
+        public virtual AlbumDatum Album { get; set; } = null!;
 
         public virtual Collection Collection { get; set; } = null!;
 
