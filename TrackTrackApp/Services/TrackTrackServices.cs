@@ -100,6 +100,9 @@ namespace TrackTrackApp.Services
             try
             {
                 SavedAlbum z = new SavedAlbum();
+                z.Album = new AlbumDatum();
+                z.Album.ArtistName = "";
+                z.Album.Country = "";
                 z.AlbumId = albumID;
                 SaveAlbumByNameDTO dto = new SaveAlbumByNameDTO() { collectionName = "favorites", savedAlbum = z };
                 string json = JsonSerializer.Serialize(dto, _serializerOptions);
