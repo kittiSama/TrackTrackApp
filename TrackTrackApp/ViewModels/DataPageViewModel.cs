@@ -11,6 +11,9 @@ namespace TrackTrackApp.ViewModels
     {
         public ChartEntry[] entries { get; set; }
 
+        public BarChart artistChart { get; set; }
+
+        public EventHandler loadCharts {  get; set; }
 
         public DataPageViewModel()
         {
@@ -29,6 +32,9 @@ namespace TrackTrackApp.ViewModels
                     ValueLabel = "b",
                 }
             };
+            artistChart = new BarChart();
+            loadCharts = new EventHandler(async (s, e) => { artistChart.Entries = entries; });
+            
         }
     }
 }
