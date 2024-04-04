@@ -9,7 +9,6 @@ public partial class DataPage : ContentPage
     {
         InitializeComponent();
         this.BindingContext = vm;
-
-        Appearing += vm.loadCharts;
+        Loaded += vm.loadCharts;
     }
 }

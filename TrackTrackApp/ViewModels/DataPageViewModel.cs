@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrackTrackApp.Models;
+using TrackTrackApp.Services;
 
 namespace TrackTrackApp.ViewModels
 {
@@ -15,8 +17,9 @@ namespace TrackTrackApp.ViewModels
 
         public EventHandler loadCharts {  get; set; }
 
-        public DataPageViewModel()
+        public DataPageViewModel(TrackTrackServices service)
         {
+
 
 
             entries = new[]
@@ -32,9 +35,17 @@ namespace TrackTrackApp.ViewModels
                     ValueLabel = "b",
                 }
             };
-            artistChart = new BarChart();
-            loadCharts = new EventHandler(async (s, e) => { artistChart.Entries = entries; });
+            artistChart = new BarChart() { Entries=entries};
+
+            loadCharts = new EventHandler((s, e) => internalLoad(service));
             
+        }
+
+        private async void internalLoad(TrackTrackServices service)
+        {
+            User currUser = await service.GetSessionUser();
+            //APP DOESNT DO THE PROCESSING, ALL PROCESSING GOES TO THE SERVER IM GENIUS, SERVER RETURNS VALUES AND RESULTS
+
         }
     }
 }
