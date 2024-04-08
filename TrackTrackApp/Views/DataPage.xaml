@@ -9,6 +9,7 @@
     Title="DataPage"
     x:DataType="viewModels:DataPageViewModel">
     <VerticalStackLayout>
+        <Button Command="{Binding BackButton}" Text="Go Back" />
 
         <Label>meow</Label>
         <Grid>

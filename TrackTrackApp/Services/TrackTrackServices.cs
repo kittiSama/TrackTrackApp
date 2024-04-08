@@ -129,6 +129,18 @@ namespace TrackTrackApp.Services
             catch { return false; }
         }
 
+        public async Task<StringAndValue[]> GetArtistChartValues()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync(URL + "GetArtistChartValues");
+                string st = await response.Content.ReadAsStringAsync();
+                StringAndValue[] toReturn = JsonSerializer.Deserialize<StringAndValue[]>(st, _serializerOptions);
+                return (toReturn);
+            }
+            catch { return null; }
+        }
+
 
         public async Task<HttpStatusCode> Hello()
         {

@@ -4,38 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using TrackTrackApp.Models;
 using TrackTrackApp.Services;
 
 namespace TrackTrackApp.ViewModels
 {
-    public class DataPageViewModel
+    public class DataPageViewModel:ViewModel
     {
         public ChartEntry[] entries { get; set; }
 
         public BarChart artistChart { get; set; }
 
-        public EventHandler loadCharts {  get; set; }
+        public EventHandler loadCharts { get; set; }
+        public ICommand BackButton { get; set; }
+
 
         public DataPageViewModel(TrackTrackServices service)
         {
-
-
-
-            entries = new[]
-            {
-                new ChartEntry(212)
-                {
-                    Label = "a",
-                    ValueLabel = "b",
-                },
-                new ChartEntry(111)
-                {
-                    Label = "a",
-                    ValueLabel = "b",
-                }
-            };
-            artistChart = new BarChart() { Entries=entries};
+            BackButton = new Command(async () => { await Shell.Current.GoToAsync("//UserMainPage"); });
 
             loadCharts = new EventHandler((s, e) => internalLoad(service));
             
@@ -43,7 +30,14 @@ namespace TrackTrackApp.ViewModels
 
         private async void internalLoad(TrackTrackServices service)
         {
-            User currUser = await service.GetSessionUser();
+            var artists = await service.GetArtistChartValues();
+            var artistEntries = new ChartEntry[artists.Length];
+            for (int i = 0; i < artists.Length; i++)
+            {
+                artistEntries[i] = new ChartEntry(artists[i].Value) { Label = artists[i].String };
+            }
+            artistChart=new BarChart() { Entries = artistEntries };
+            OnPropertyChanged(nameof(artistChart));
             //APP DOESNT DO THE PROCESSING, ALL PROCESSING GOES TO THE SERVER IM GENIUS, SERVER RETURNS VALUES AND RESULTS
 
         }
