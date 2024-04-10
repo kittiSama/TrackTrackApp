@@ -26,20 +26,37 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Image
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Grid.ColumnSpan="2"
                             HeightRequest="250"
                             Source="{Binding album.ImageUrl}"
                             WidthRequest="250" />
-                        <Label Grid.Row="0" Text="{Binding album.AlbumTitle}" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="{Binding album.AlbumTitle}" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Text="{Binding album.ArtistName}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Text="{Binding album.Year}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{Binding album.Genre}" />
                         <ImageButton
-                            Grid.Row="2"
+                            Grid.Row="3"
+                            Grid.Column="0"
                             Command="{Binding Source={Reference mCollectionView}, Path=BindingContext.LikeAlbumCommand}"
                             CommandParameter="{Binding}"
                             HeightRequest="50"

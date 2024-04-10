@@ -15,6 +15,7 @@ namespace TrackTrackApp.ViewModels
         public ChartEntry[] entries { get; set; }
 
         public BarChart artistChart { get; set; }
+        public BarChart genreChart { get; set; }
 
         public EventHandler loadCharts { get; set; }
         public ICommand BackButton { get; set; }
@@ -34,9 +35,9 @@ namespace TrackTrackApp.ViewModels
             var artistEntries = new ChartEntry[artists.Length];
             for (int i = 0; i < artists.Length; i++)
             {
-                artistEntries[i] = new ChartEntry(artists[i].Value) { Label = artists[i].String };
+                artistEntries[i] = new ChartEntry(artists[i].Value) { Label = artists[i].String, ValueLabel = artists[i].Value.ToString() };
             }
-            artistChart=new BarChart() { Entries = artistEntries };
+            artistChart=new BarChart() { Entries = artistEntries, };
             OnPropertyChanged(nameof(artistChart));
             //APP DOESNT DO THE PROCESSING, ALL PROCESSING GOES TO THE SERVER IM GENIUS, SERVER RETURNS VALUES AND RESULTS
 

@@ -11,19 +11,26 @@
     <VerticalStackLayout>
         <Button Command="{Binding BackButton}" Text="Go Back" />
 
-        <Label>meow</Label>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <micro:ChartView
-                x:Name="chartView"
+                x:Name="artistChartView"
                 Grid.Row="0"
                 Grid.Column="0"
+                Chart="{Binding artistChart}"
+                HeightRequest="300"
+                WidthRequest="300" />
+            <micro:ChartView
+                x:Name="genreChartView"
+                Grid.Row="0"
+                Grid.Column="1"
                 Chart="{Binding artistChart}"
                 HeightRequest="300"
                 WidthRequest="300" />
