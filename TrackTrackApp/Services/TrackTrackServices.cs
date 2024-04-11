@@ -129,18 +129,39 @@ namespace TrackTrackApp.Services
             catch { return false; }
         }
 
-        public async Task<StringAndValue[]> GetArtistChartValues()
+        public async Task<List<StringAndValue>> GetArtistChartValues()
         {
             try
             {
                 var response = await _httpClient.GetAsync(URL + "GetArtistChartValues");
                 string st = await response.Content.ReadAsStringAsync();
-                StringAndValue[] toReturn = JsonSerializer.Deserialize<StringAndValue[]>(st, _serializerOptions);
+                List<StringAndValue> toReturn = JsonSerializer.Deserialize<List<StringAndValue>>(st, _serializerOptions);
                 return (toReturn);
             }
             catch { return null; }
         }
-
+        public async Task<List<StringAndValue>> GetGenreChartValues()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync(URL + "GetGenreChartValues");
+                string st = await response.Content.ReadAsStringAsync();
+                List<StringAndValue> toReturn = JsonSerializer.Deserialize<List<StringAndValue>>(st, _serializerOptions);
+                return (toReturn);
+            }
+            catch { return null; }
+        }
+        public async Task<List<StringAndValue>> GetStyleChartValues()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync(URL + "GetStyleChartValues");
+                string st = await response.Content.ReadAsStringAsync();
+                List<StringAndValue> toReturn = JsonSerializer.Deserialize<List<StringAndValue>>(st, _serializerOptions);
+                return (toReturn);
+            }
+            catch { return null; }
+        }
 
         public async Task<HttpStatusCode> Hello()
         {

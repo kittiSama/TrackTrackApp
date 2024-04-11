@@ -16,6 +16,7 @@ namespace TrackTrackApp.ViewModels
 
         public BarChart artistChart { get; set; }
         public BarChart genreChart { get; set; }
+        public BarChart styleChart { get; set; }
 
         public EventHandler loadCharts { get; set; }
         public ICommand BackButton { get; set; }
@@ -31,14 +32,35 @@ namespace TrackTrackApp.ViewModels
 
         private async void internalLoad(TrackTrackServices service)
         {
+            //artist chart
             var artists = await service.GetArtistChartValues();
-            var artistEntries = new ChartEntry[artists.Length];
-            for (int i = 0; i < artists.Length; i++)
+            var artistEntries = new ChartEntry[artists.Count];
+            for (int i = 0; i < artists.Count; i++)
             {
                 artistEntries[i] = new ChartEntry(artists[i].Value) { Label = artists[i].String, ValueLabel = artists[i].Value.ToString() };
             }
             artistChart=new BarChart() { Entries = artistEntries, };
             OnPropertyChanged(nameof(artistChart));
+
+            //genre chart
+            var genres = await service.GetGenreChartValues();
+            var genreEntries = new ChartEntry[genres.Count];
+            for (int i = 0; i < genres.Count; i++)
+            {
+                genreEntries[i] = new ChartEntry(genres[i].Value) { Label = genres[i].String, ValueLabel = genres[i].Value.ToString() };
+            }
+            genreChart = new BarChart() { Entries = genreEntries};
+            OnPropertyChanged(nameof(genreChart));
+
+            //style chart
+            var styles = await service.GetStyleChartValues();
+            var styleEntries = new ChartEntry[styles.Count];
+            for (int i = 0; i < styles.Count; i++)
+            {
+                styleEntries[i] = new ChartEntry(styles[i].Value) { Label = styles[i].String, ValueLabel = styles[i].Value.ToString() };
+            }
+            styleChart = new BarChart() { Entries = styleEntries };
+            OnPropertyChanged(nameof(styleChart));
             //APP DOESNT DO THE PROCESSING, ALL PROCESSING GOES TO THE SERVER IM GENIUS, SERVER RETURNS VALUES AND RESULTS
 
         }
