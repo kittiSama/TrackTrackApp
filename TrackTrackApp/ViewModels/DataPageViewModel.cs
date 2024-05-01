@@ -17,6 +17,7 @@ namespace TrackTrackApp.ViewModels
         public BarChart artistChart { get; set; }
         public BarChart genreChart { get; set; }
         public BarChart styleChart { get; set; }
+        public BarChart yearChart { get; set; }
 
         public EventHandler loadCharts { get; set; }
         public ICommand BackButton { get; set; }
@@ -61,8 +62,19 @@ namespace TrackTrackApp.ViewModels
             }
             styleChart = new BarChart() { Entries = styleEntries };
             OnPropertyChanged(nameof(styleChart));
-            //APP DOESNT DO THE PROCESSING, ALL PROCESSING GOES TO THE SERVER IM GENIUS, SERVER RETURNS VALUES AND RESULTS
 
+            //year chart
+            
+            var years = await service.GetYearChartValues();
+            var yearEntries = new ChartEntry[years.Count];
+            for (int i = 0; i < years.Count; i++)
+            {
+                yearEntries[i] = new ChartEntry(years[i].Value) { Label = years[i].String, ValueLabel = years[i].Value.ToString() };
+            }
+            yearChart = new BarChart() { Entries = yearEntries };
+            OnPropertyChanged(nameof(yearChart));
+            //APP DOESNT DO THE PROCESSING, ALL PROCESSING GOES TO THE SERVER IM GENIUS, SERVER RETURNS VALUES AND RESULTS
+            
         }
     }
 }

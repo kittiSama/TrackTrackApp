@@ -162,6 +162,17 @@ namespace TrackTrackApp.Services
             }
             catch { return null; }
         }
+        public async Task<List<StringAndValue>> GetYearChartValues()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync(URL + "GetYearChartValues");
+                string st = await response.Content.ReadAsStringAsync();
+                List<StringAndValue> toReturn = JsonSerializer.Deserialize<List<StringAndValue>>(st, _serializerOptions);
+                return (toReturn);
+            }
+            catch { return null; }
+        }
 
         public async Task<HttpStatusCode> Hello()
         {

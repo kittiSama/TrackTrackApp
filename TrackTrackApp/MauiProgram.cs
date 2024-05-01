@@ -17,8 +17,11 @@ namespace TrackTrackApp
                 .UseMicrocharts()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Regular.ttf", "RealOpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+
+                    fonts.AddFont("ConcertOne-Regular.ttf", "concertOne");
+                    fonts.AddFont("Assistant-VariableFont_wght.ttf", "OpenSansRegular");
                 });
 
 #if DEBUG

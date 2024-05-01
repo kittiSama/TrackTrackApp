@@ -49,6 +49,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\Assistant-VariableFont_wght.ttf" />
+	  <None Remove="Resources\Fonts\ConcertOne-Regular.ttf" />
+	  <None Remove="Resources\Images\heart_icon - Copy.png" />
 	  <None Remove="Resources\Images\heart_icon_happy.png" />
 	</ItemGroup>
 

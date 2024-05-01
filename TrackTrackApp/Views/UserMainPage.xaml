@@ -5,17 +5,33 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:models="clr-namespace:TrackTrackApp.Models"
     xmlns:viewModels="clr-namespace:TrackTrackApp.ViewModels"
-    Title="UserMainPage"
+    Title="Home Page"
     x:DataType="viewModels:UserMainPageViewModel">
 
-    <VerticalStackLayout>
+    <VerticalStackLayout Margin="80,20,80,20" Spacing="40">
 
-        <Label FontSize="Header" Text="{Binding WelcomeMessage}" />
+        <Label
+            FontFamily="concertOne"
+            FontSize="80"
+            HorizontalOptions="Center"
+            Text="{Binding WelcomeMessage}" />
+        <BoxView HeightRequest="1" Color="#FF453251" />
 
-        <Label Text="Search album:" />
-        <SearchBar SearchCommand="{Binding QuerySubmitButton}" Text="{Binding Query}" />
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="30">
+            <Label FontSize="Title" Text="Search album:" />
+            <SearchBar
+                SearchCommand="{Binding QuerySubmitButton}"
+                Text="{Binding Query}"
+                WidthRequest="600" />
 
-        <Button Command="{Binding DatapageButton}" Text="View data" />
+        </HorizontalStackLayout>
+
+
+        <Button
+            Command="{Binding DatapageButton}"
+            FontSize="Subtitle"
+            Text="View data"
+            WidthRequest="300" />
 
     </VerticalStackLayout>
 </ContentPage>
