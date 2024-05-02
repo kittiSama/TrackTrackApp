@@ -38,9 +38,9 @@ namespace TrackTrackApp.ViewModels
             var artistEntries = new ChartEntry[artists.Count];
             for (int i = 0; i < artists.Count; i++)
             {
-                artistEntries[i] = new ChartEntry(artists[i].Value) { Label = artists[i].String, ValueLabel = artists[i].Value.ToString() };
+                artistEntries[i] = new ChartEntry(artists[i].Value) { Label = artists[i].String, ValueLabel = artists[i].Value.ToString(), Color = new SkiaSharp.SKColor(203, 151, 231) };
             }
-            artistChart=new BarChart() { Entries = artistEntries, };
+            artistChart=new BarChart() { Entries = artistEntries, BackgroundColor=new SkiaSharp.SKColor(223,216,247), CornerRadius=10, LabelTextSize=20 };
             OnPropertyChanged(nameof(artistChart));
 
             //genre chart
@@ -48,9 +48,9 @@ namespace TrackTrackApp.ViewModels
             var genreEntries = new ChartEntry[genres.Count];
             for (int i = 0; i < genres.Count; i++)
             {
-                genreEntries[i] = new ChartEntry(genres[i].Value) { Label = genres[i].String, ValueLabel = genres[i].Value.ToString() };
+                genreEntries[i] = new ChartEntry(genres[i].Value) { Label = genres[i].String, ValueLabel = genres[i].Value.ToString(), Color = new SkiaSharp.SKColor(203, 151, 231) };
             }
-            genreChart = new BarChart() { Entries = genreEntries};
+            genreChart = new BarChart() { Entries = genreEntries, BackgroundColor = new SkiaSharp.SKColor(223, 216, 247), CornerRadius = 10, LabelTextSize = 20 };
             OnPropertyChanged(nameof(genreChart));
 
             //style chart
@@ -58,9 +58,9 @@ namespace TrackTrackApp.ViewModels
             var styleEntries = new ChartEntry[styles.Count];
             for (int i = 0; i < styles.Count; i++)
             {
-                styleEntries[i] = new ChartEntry(styles[i].Value) { Label = styles[i].String, ValueLabel = styles[i].Value.ToString() };
+                styleEntries[i] = new ChartEntry(styles[i].Value) { Label = styles[i].String, ValueLabel = styles[i].Value.ToString(), Color = new SkiaSharp.SKColor(203, 151, 231) };
             }
-            styleChart = new BarChart() { Entries = styleEntries };
+            styleChart = new BarChart() { Entries = styleEntries, BackgroundColor = new SkiaSharp.SKColor(223, 216, 247), CornerRadius = 10, LabelTextSize = 20 };
             OnPropertyChanged(nameof(styleChart));
 
             //year chart
@@ -69,9 +69,9 @@ namespace TrackTrackApp.ViewModels
             var yearEntries = new ChartEntry[years.Count];
             for (int i = 0; i < years.Count; i++)
             {
-                yearEntries[i] = new ChartEntry(years[i].Value) { Label = years[i].String, ValueLabel = years[i].Value.ToString() };
+                yearEntries[i] = new ChartEntry(years[i].Value) { Label = years[i].String, ValueLabel = years[i].Value.ToString(), Color = new SkiaSharp.SKColor(203, 151, 231) };
             }
-            yearChart = new BarChart() { Entries = yearEntries };
+            yearChart = new BarChart() { Entries = yearEntries, BackgroundColor = new SkiaSharp.SKColor(223, 216, 247), CornerRadius = 10, LabelTextSize = 20 };
             OnPropertyChanged(nameof(yearChart));
             //APP DOESNT DO THE PROCESSING, ALL PROCESSING GOES TO THE SERVER IM GENIUS, SERVER RETURNS VALUES AND RESULTS
             

@@ -8,54 +8,55 @@
     xmlns:viewModels="clr-namespace:TrackTrackApp.ViewModels"
     Title="DataPage"
     x:DataType="viewModels:DataPageViewModel">
-    <VerticalStackLayout>
-        <Button Command="{Binding BackButton}" Text="Go Back" />
+    <ScrollView>
+        <VerticalStackLayout Margin="20,20,20,20" Spacing="20">
+            <Button
+                BackgroundColor="#FF453251"
+                Command="{Binding BackButton}"
+                FontSize="Subtitle"
+                HorizontalOptions="Start"
+                Text="Go Back ⏎"
+                WidthRequest="120" />
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
 
-            <micro:ChartView
-                x:Name="artistChartView"
-                Grid.Row="0"
-                Grid.Column="0"
-                Chart="{Binding artistChart}"
-                HeightRequest="300"
-                WidthRequest="300" />
+            <Border StrokeShape="RoundRectangle 30">
+                <VerticalStackLayout Spacing="20">
+                    <Label
+                        FontSize="Header"
+                        HorizontalOptions="Center"
+                        Text="Artist Chart" />
+                    <micro:ChartView
+                        x:Name="artistChartView"
+                        Margin="20,20,20,20"
+                        Chart="{Binding artistChart}"
+                        HeightRequest="500" />
+                </VerticalStackLayout>
+            </Border>
 
-            <micro:ChartView
-                x:Name="genreChartView"
-                Grid.Row="0"
-                Grid.Column="1"
-                Chart="{Binding genreChart}"
-                HeightRequest="300"
-                WidthRequest="300" />
+            <Border>
+                <VerticalStackLayout Spacing="20">
+                    <Label
+                        FontSize="Header"
+                        HorizontalOptions="Center"
+                        Text="Genre Chart" />
+                    <micro:ChartView
+                        x:Name="genreChartView"
+                        Chart="{Binding genreChart}"
+                        HeightRequest="500" />
+                </VerticalStackLayout>
+            </Border>
 
             <micro:ChartView
                 x:Name="styleChartView"
-                Grid.Row="0"
-                Grid.Column="2"
                 Chart="{Binding styleChart}"
-                HeightRequest="300"
-                WidthRequest="300" />
+                HeightRequest="500" />
 
             <micro:ChartView
                 x:Name="yearChartView"
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
                 Chart="{Binding yearChart}"
-                HeightRequest="300"
-                WidthRequest="900" />
+                HeightRequest="500" />
 
-        </Grid>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>
