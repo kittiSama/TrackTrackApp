@@ -19,10 +19,16 @@
 
         <HorizontalStackLayout HorizontalOptions="Center" Spacing="30">
             <Label FontSize="Title" Text="Search album:" />
-            <SearchBar
-                SearchCommand="{Binding QuerySubmitButton}"
-                Text="{Binding Query}"
-                WidthRequest="600" />
+            <VerticalStackLayout>
+                <SearchBar
+                    FontSize="Subtitle"
+                    SearchCommand="{Binding QuerySubmitButton}"
+                    Text="{Binding Query}"
+                    WidthRequest="600" />
+                <Picker ItemsSource="{Binding searchTypes}" SelectedItem="{Binding chosenType}" />
+
+
+            </VerticalStackLayout>
 
         </HorizontalStackLayout>
 

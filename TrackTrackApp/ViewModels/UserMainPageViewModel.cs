@@ -1,6 +1,7 @@
 ﻿//using Android.App.Admin;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,13 +27,21 @@ namespace TrackTrackApp.ViewModels
         private User sessionUser;
         public User SessionUser { get { return sessionUser; } set {  sessionUser = value; OnPropertyChanged(); } }
 
+        public ObservableCollection<string> searchTypes { get; protected set; }
+        public string chosenType { get; protected set; }
+
+        public string[] QueryAndSearchType { get { return (new string[] { query, chosenType }); } }
+
+
 
         public UserMainPageViewModel(TrackTrackServices service)
         {
+            searchTypes = new ObservableCollection<string> { "Album Title", "Artist Name", "Label Name", "Genre", "Style", "Country", "Year"};
+            chosenType = "Album Title";
 
             GetUser = new EventHandler(async (s, e) => { SessionUser = await service.GetSessionUser(); WelcomeMessage = "Welcome " + SessionUser.Name; }) ;
-
-            QuerySubmitButton = new Command(async () => await Shell.Current.GoToAsync("//SearchPage"+"?q="+Query));//transfers to search page
+            //+"&SType="+chosenType
+            QuerySubmitButton = new Command(async () => await Shell.Current.GoToAsync("//SearchPage"+"?QNSType="+Query));//transfers to search page
             DatapageButton = new Command(async () => await Shell.Current.GoToAsync("//DataPage"));
         }
     }

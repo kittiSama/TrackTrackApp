@@ -58,11 +58,11 @@ namespace TrackTrackApp.Services
 
         }
 
-        public async Task<AlbumAndHeart[]> QueryTop5(string q)
+        public async Task<AlbumAndHeart[]> QueryTop5(string q, string SType)
         {
             try
             {
-                var response = await _httpClient.GetAsync(URL + "GetClosestAlbumsForApp" + "?q=" + q);
+                var response = await _httpClient.GetAsync(URL + "GetClosestAlbumsForApp" + "?q=" + q + "&SType=" + SType);
                 AlbumAndHeart[] content = (AlbumAndHeart[])(JsonSerializer.Deserialize(await response.Content.ReadAsStringAsync(), typeof(AlbumAndHeart[]), _serializerOptions));
                 //AlbumAndHeart[] toReturn = new AlbumAndHeart[content.Length];  // i changed everything makje it work :))))
                 //string user = ((await GetSessionUser()).Id).ToString(); //something here doesnt work, could also be in the server

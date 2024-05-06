@@ -13,7 +13,7 @@ namespace TrackTrackApp.ViewModels
 {
 
 
-    [QueryProperty("Query", "q")]
+    [QueryProperty("QueryAndSearchType", "QNSType")]
     public class SearchPageViewModel:ViewModel
     {
         const string ONHEART = "heart_icon_happy.png";
@@ -22,8 +22,13 @@ namespace TrackTrackApp.ViewModels
         private string query;
         public string Query {  get { return query; } set {  query = value; OnPropertyChanged(); } }
 
+        private string searchtype;
+        public string SearchType { get { return searchtype; } set { searchtype = value; OnPropertyChanged(); } }
+
         private string newQuery;
         public string NewQuery { get { return newQuery; } set { newQuery = value; OnPropertyChanged(); } }
+
+        public string[] QueryAndSearchType { get { return (new string[] {query, searchtype}); } }
 
         private ObservableCollection<AlbumAndHeart> albums;
         public ObservableCollection<AlbumAndHeart> Albums { get { return albums; } set { albums = value; OnPropertyChanged("Albums"); } }
@@ -41,7 +46,7 @@ namespace TrackTrackApp.ViewModels
             PopulateAlbums = new EventHandler(async (s, e) =>
             {
                 Albums = new ObservableCollection<AlbumAndHeart>(new AlbumAndHeart[5]);
-                var arr = await service.QueryTop5(Query);
+                var arr = await service.QueryTop5(Query, SearchType);
                 if(arr!= null)
                 {
                     for (int i = 0; i < arr.Length; i++)
@@ -56,7 +61,7 @@ namespace TrackTrackApp.ViewModels
             SearchCommand = new Command(async () =>
             {
                 Albums = new ObservableCollection<AlbumAndHeart>(new AlbumAndHeart[5]);
-                var arr = await service.QueryTop5(NewQuery);
+                var arr = await service.QueryTop5(NewQuery, SearchType);
                 if( arr!= null)
                 {
                     for (int i = 0; i < arr.Length; i++)
