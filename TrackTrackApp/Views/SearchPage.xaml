@@ -24,11 +24,14 @@
                 HorizontalOptions="Center"
                 Spacing="20">
                 <Label FontSize="Title" Text="Search: " />
-                <SearchBar
-                    FontSize="Subtitle"
-                    SearchCommand="{Binding SearchCommand}"
-                    Text="{Binding NewQuery}"
-                    WidthRequest="600" />
+                <VerticalStackLayout>
+                    <SearchBar
+                        FontSize="Subtitle"
+                        SearchCommand="{Binding SearchCommand}"
+                        Text="{Binding NewQuery}"
+                        WidthRequest="600" />
+                    <Picker ItemsSource="{Binding searchTypes}" SelectedItem="{Binding chosenType}" />
+                </VerticalStackLayout>
             </HorizontalStackLayout>
         </Border>
         <CollectionView

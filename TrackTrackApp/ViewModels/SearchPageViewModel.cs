@@ -13,7 +13,7 @@ namespace TrackTrackApp.ViewModels
 {
 
 
-    [QueryProperty("QueryAndSearchType", "QNSType")]
+    [QueryProperty(nameof(QueryAndSearchType), "QNSType")]
     public class SearchPageViewModel:ViewModel
     {
         const string ONHEART = "heart_icon_happy.png";
@@ -28,7 +28,8 @@ namespace TrackTrackApp.ViewModels
         private string newQuery;
         public string NewQuery { get { return newQuery; } set { newQuery = value; OnPropertyChanged(); } }
 
-        public string[] QueryAndSearchType { get { return (new string[] {query, searchtype}); } }
+        private string queryandsearchtype;
+        public string QueryAndSearchType { get { return queryandsearchtype; } set { queryandsearchtype = value; OnPropertyChanged(); } }
 
         private ObservableCollection<AlbumAndHeart> albums;
         public ObservableCollection<AlbumAndHeart> Albums { get { return albums; } set { albums = value; OnPropertyChanged("Albums"); } }
@@ -38,21 +39,33 @@ namespace TrackTrackApp.ViewModels
         public ICommand SearchCommand {  get; set; }
         public ICommand LikeAlbumCommand {  get; set; }
         public ICommand BackButton { get; set; }
+        public ObservableCollection<string> searchTypes { get; protected set; }
+
+        private string chosentype;
+        public string chosenType { get { return chosentype; } set { chosentype = value; OnPropertyChanged(); } }
 
         public SearchPageViewModel(TrackTrackServices service)
         {
+            searchTypes = new ObservableCollection<string> { "Album Title", "Artist Name", "Label Name", "Genre", "Style", "Country", "Year" };
+
             BackButton = new Command(async () => { await Shell.Current.GoToAsync("//UserMainPage"); });
 
             PopulateAlbums = new EventHandler(async (s, e) =>
             {
                 Albums = new ObservableCollection<AlbumAndHeart>(new AlbumAndHeart[5]);
-                var arr = await service.QueryTop5(Query, SearchType);
-                if(arr!= null)
+                splitQNSType();
+                if(Query!=null && SearchType != null)
                 {
-                    for (int i = 0; i < arr.Length; i++)
+                    chosenType = SearchType;
+                    var arr = await service.QueryTop5(Query, SearchType);
+                    if (arr != null)
                     {
-                        Albums[i] = arr[i];
+                        for (int i = 0; i < arr.Length; i++)
+                        {
+                            Albums[i] = arr[i];
+                        }
                     }
+
                 }
             });
 
@@ -61,7 +74,8 @@ namespace TrackTrackApp.ViewModels
             SearchCommand = new Command(async () =>
             {
                 Albums = new ObservableCollection<AlbumAndHeart>(new AlbumAndHeart[5]);
-                var arr = await service.QueryTop5(NewQuery, SearchType);
+                splitQNSType();
+                var arr = await service.QueryTop5(NewQuery, chosenType);
                 if( arr!= null)
                 {
                     for (int i = 0; i < arr.Length; i++)
@@ -75,6 +89,16 @@ namespace TrackTrackApp.ViewModels
             
         }
 
+        private void splitQNSType()
+        {
+            if (QueryAndSearchType != null)
+            {
+
+                var z = QueryAndSearchType.Split("~");
+                Query = z[0];
+                SearchType = z[1];
+            }
+        }
 
 
         private async Task LikeAlbumInternal(AlbumAndHeart al, TrackTrackServices service)

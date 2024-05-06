@@ -28,7 +28,9 @@ namespace TrackTrackApp.ViewModels
         public User SessionUser { get { return sessionUser; } set {  sessionUser = value; OnPropertyChanged(); } }
 
         public ObservableCollection<string> searchTypes { get; protected set; }
-        public string chosenType { get; protected set; }
+
+        private string chosentype;
+        public string chosenType { get { return chosentype; }set { chosentype = value; OnPropertyChanged(); } }
 
         public string[] QueryAndSearchType { get { return (new string[] { query, chosenType }); } }
 
@@ -36,13 +38,15 @@ namespace TrackTrackApp.ViewModels
 
         public UserMainPageViewModel(TrackTrackServices service)
         {
-            searchTypes = new ObservableCollection<string> { "Album Title", "Artist Name", "Label Name", "Genre", "Style", "Country", "Year"};
+            searchTypes = new ObservableCollection<string> { "Album Title", "Artist Name", "Label Name", "Genre", "Style", "Country", "Year" };
             chosenType = "Album Title";
 
-            GetUser = new EventHandler(async (s, e) => { SessionUser = await service.GetSessionUser(); WelcomeMessage = "Welcome " + SessionUser.Name; }) ;
+            GetUser = new EventHandler(async (s, e) => { SessionUser = await service.GetSessionUser(); WelcomeMessage = "Welcome " + SessionUser.Name; });
             //+"&SType="+chosenType
-            QuerySubmitButton = new Command(async () => await Shell.Current.GoToAsync("//SearchPage"+"?QNSType="+Query));//transfers to search page
+
+            QuerySubmitButton = new Command(async () => {await Shell.Current.GoToAsync("//SearchPage" + "?QNSType=" + Query + "~" + chosenType); });//transfers to search page
             DatapageButton = new Command(async () => await Shell.Current.GoToAsync("//DataPage"));
         }
+
     }
 }
