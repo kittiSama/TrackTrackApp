@@ -22,6 +22,7 @@ namespace TrackTrackApp.ViewModels
         public string Query { get { return query; } set { query = value; OnPropertyChanged(); } }
         public ICommand QuerySubmitButton { get; protected set; }
         public ICommand DatapageButton { get; protected set; }
+        public ICommand ProfileButton { get; protected set; }
         public EventHandler GetUser {  get; protected set; }
 
         private User sessionUser;
@@ -35,6 +36,11 @@ namespace TrackTrackApp.ViewModels
         public string[] QueryAndSearchType { get { return (new string[] { query, chosenType }); } }
 
 
+        private string friendidquery;
+        public string friendIDQuery { get { return friendidquery; } set { friendidquery = value; OnPropertyChanged(); } }
+
+        public ICommand FriendIDSubmit { get; protected set; }
+
 
         public UserMainPageViewModel(TrackTrackServices service)
         {
@@ -46,6 +52,8 @@ namespace TrackTrackApp.ViewModels
 
             QuerySubmitButton = new Command(async () => {await Shell.Current.GoToAsync("//SearchPage" + "?QNSType=" + Query + "~" + chosenType); });//transfers to search page
             DatapageButton = new Command(async () => await Shell.Current.GoToAsync("//DataPage"));
+            FriendIDSubmit = new Command(async () => await Shell.Current.GoToAsync("//FriendDataPage?friendID=" + friendIDQuery));
+            ProfileButton = new Command(async () => await Shell.Current.GoToAsync("//Profile"));
         }
 
     }

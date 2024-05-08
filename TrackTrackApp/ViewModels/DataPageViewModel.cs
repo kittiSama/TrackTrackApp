@@ -73,7 +73,7 @@ namespace TrackTrackApp.ViewModels
             }
             yearChart = new BarChart() { Entries = yearEntries, BackgroundColor = new SkiaSharp.SKColor(223, 216, 247), CornerRadius = 10, LabelTextSize = 20 };
             OnPropertyChanged(nameof(yearChart));
-            //APP DOESNT DO THE PROCESSING, ALL PROCESSING GOES TO THE SERVER IM GENIUS, SERVER RETURNS VALUES AND RESULTS
+            //APP DOESNT DO THE PROCESSING, ALL PROCESSING GOES TO THE SERVER
             
         }
     }

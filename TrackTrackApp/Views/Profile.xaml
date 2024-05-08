@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TrackTrackApp.Views.Profile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:TrackTrackApp.Models"
+    xmlns:viewModels="clr-namespace:TrackTrackApp.ViewModels"
+    Title="Profile"
+    x:DataType="viewModels:ProfileViewModel">
+
+    <VerticalStackLayout>
+        <Button
+            BackgroundColor="#FF453251"
+            Command="{Binding BackButton}"
+            FontSize="Subtitle"
+            HorizontalOptions="Start"
+            Text="Go Back ⏎"
+            WidthRequest="120" />
+
+        <Entry Text="{Binding SessionUser.Name}" />
+        <Entry Text="{Binding SessionUser.Password}" />
+        <Entry Text="{Binding SessionUser.Email}" />
+        <Entry Text="{Binding SessionUser.Bio}" />
+
+        <Button Command="{Binding SubmitChangesCommand}" Text="Submit Changes" />
+
+    </VerticalStackLayout>
+</ContentPage>

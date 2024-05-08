@@ -39,6 +39,10 @@ namespace TrackTrackApp
             builder.Services.AddSingleton<SearchPageViewModel>();
             builder.Services.AddSingleton<DataPage>();
             builder.Services.AddSingleton<DataPageViewModel>();
+            builder.Services.AddSingleton<FriendDataPage>();
+            builder.Services.AddSingleton<FriendDataPageViewModel>();
+            builder.Services.AddSingleton<Profile>();
+            builder.Services.AddSingleton<ProfileViewModel>();
 
             builder.Services.AddSingleton<TrackTrackServices>();
 

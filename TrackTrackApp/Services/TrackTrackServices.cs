@@ -129,44 +129,44 @@ namespace TrackTrackApp.Services
             catch { return false; }
         }
 
-        public async Task<List<StringAndValue>> GetArtistChartValues()
+        public async Task<List<StringAndValue>> GetArtistChartValues(long id = -1)
         {
             try
             {
-                var response = await _httpClient.GetAsync(URL + "GetArtistChartValues");
+                var response = await _httpClient.GetAsync(URL + "GetArtistChartValues?id=" + id);
                 string st = await response.Content.ReadAsStringAsync();
                 List<StringAndValue> toReturn = JsonSerializer.Deserialize<List<StringAndValue>>(st, _serializerOptions);
                 return (toReturn);
             }
             catch { return null; }
         }
-        public async Task<List<StringAndValue>> GetGenreChartValues()
+        public async Task<List<StringAndValue>> GetGenreChartValues(long id = -1)
         {
             try
             {
-                var response = await _httpClient.GetAsync(URL + "GetGenreChartValues");
+                var response = await _httpClient.GetAsync(URL + "GetGenreChartValues?id=" + id);
                 string st = await response.Content.ReadAsStringAsync();
                 List<StringAndValue> toReturn = JsonSerializer.Deserialize<List<StringAndValue>>(st, _serializerOptions);
                 return (toReturn);
             }
             catch { return null; }
         }
-        public async Task<List<StringAndValue>> GetStyleChartValues()
+        public async Task<List<StringAndValue>> GetStyleChartValues(long id = -1)
         {
             try
             {
-                var response = await _httpClient.GetAsync(URL + "GetStyleChartValues");
+                var response = await _httpClient.GetAsync(URL + "GetStyleChartValues?id="+id);
                 string st = await response.Content.ReadAsStringAsync();
                 List<StringAndValue> toReturn = JsonSerializer.Deserialize<List<StringAndValue>>(st, _serializerOptions);
                 return (toReturn);
             }
             catch { return null; }
         }
-        public async Task<List<StringAndValue>> GetYearChartValues()
+        public async Task<List<StringAndValue>> GetYearChartValues(long id = -1)
         {
             try
             {
-                var response = await _httpClient.GetAsync(URL + "GetYearChartValues");
+                var response = await _httpClient.GetAsync(URL + "GetYearChartValues?id="+id);
                 string st = await response.Content.ReadAsStringAsync();
                 List<StringAndValue> toReturn = JsonSerializer.Deserialize<List<StringAndValue>>(st, _serializerOptions);
                 return (toReturn);
@@ -182,6 +182,36 @@ namespace TrackTrackApp.Services
                 return(response.StatusCode);
             }
             catch { return HttpStatusCode.BadRequest; }
+        }
+
+        public async Task<User> GetUserByID(long id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync(URL + "GetUsers?param=id&value=" + id);
+                string st = await response.Content.ReadAsStringAsync();
+                return (JsonSerializer.Deserialize<User>(st, _serializerOptions));
+            }
+            catch { return null; }
+        }
+
+        public async Task<bool> UpdateUser(User user)
+        {
+            try
+            {//fix this
+                var response = await _httpClient.GetAsync(URL + "UpdateUser?" + "id=" + user.Id + "&name=" + user.Name + "&password=" + user.Password + "&email=" + user.Email + "&bio=" + user.Bio);
+                string st = await response.Content.ReadAsStringAsync();
+
+                if(JsonSerializer.Deserialize<bool>(st, _serializerOptions))
+                {
+                    await SecureStorage.Default.SetAsync("CurrentUser", JsonSerializer.Serialize(user, _serializerOptions));
+                    return (true);
+                }
+                
+                return false;
+                
+            }
+            catch { return false; }
         }
     }
 }

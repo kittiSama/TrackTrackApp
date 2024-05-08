@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="TrackTrackApp.Views.DataPage"
+    x:Class="TrackTrackApp.Views.FriendDataPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
     xmlns:models="clr-namespace:TrackTrackApp.Models"
     xmlns:viewModels="clr-namespace:TrackTrackApp.ViewModels"
-    Title="DataPage"
-    x:DataType="viewModels:DataPageViewModel">
+    Title="FriendDataPage"
+    x:DataType="viewModels:FriendDataPageViewModel">
+
     <ScrollView>
         <VerticalStackLayout Margin="20,20,20,20" Spacing="20">
+
             <Button
                 BackgroundColor="#FF453251"
                 Command="{Binding BackButton}"
@@ -18,6 +20,16 @@
                 Text="Go Back ⏎"
                 WidthRequest="120" />
 
+            <HorizontalStackLayout HorizontalOptions="Start" Spacing="10">
+                <Label
+                    FontSize="Subtitle"
+                    Text="Showing data for: "
+                    VerticalOptions="End" />
+                <Label
+                    FontSize="Header"
+                    Text="{Binding friendUser.Name}"
+                    VerticalOptions="End" />
+            </HorizontalStackLayout>
 
             <Border StrokeShape="RoundRectangle 30">
                 <VerticalStackLayout Spacing="20">
@@ -76,5 +88,4 @@
 
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

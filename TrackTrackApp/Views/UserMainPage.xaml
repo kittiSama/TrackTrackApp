@@ -32,12 +32,34 @@
 
         </HorizontalStackLayout>
 
+        <BoxView HeightRequest="1" Color="#FF453251" />
 
-        <Button
-            Command="{Binding DatapageButton}"
-            FontSize="Subtitle"
-            Text="View data"
-            WidthRequest="300" />
+        <HorizontalStackLayout Spacing="20">
+            <Button
+                Command="{Binding DatapageButton}"
+                FontSize="Subtitle"
+                Text="View your data"
+                WidthRequest="300" />
+            <Button Command="{Binding ProfileButton}" Text="View Your Profile" />
+
+        </HorizontalStackLayout>
+
+        <BoxView HeightRequest="1" Color="#FF453251" />
+
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+            <Label FontSize="Title" Text="Your FriendID™: " />
+            <Label FontSize="Title" Text="{Binding SessionUser.Id}" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+            <Label FontSize="Title" Text="Enter a friend's FriendID™: " />
+            <SearchBar
+                SearchCommand="{Binding FriendIDSubmit}"
+                Text="{Binding friendIDQuery}"
+                WidthRequest="600" />
+        </HorizontalStackLayout>
+
+
 
     </VerticalStackLayout>
 </ContentPage>

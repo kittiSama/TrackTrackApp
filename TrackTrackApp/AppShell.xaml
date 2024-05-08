@@ -37,4 +37,14 @@
         ContentTemplate="{DataTemplate views:DataPage}"
         Route="DataPage" />
 
+    <ShellContent
+        Title="FriendDataPage"
+        ContentTemplate="{DataTemplate views:FriendDataPage}"
+        Route="FriendDataPage" />
+
+    <ShellContent
+        Title="Profile"
+        ContentTemplate="{DataTemplate views:Profile}"
+        Route="Profile" />
+
 </Shell>
