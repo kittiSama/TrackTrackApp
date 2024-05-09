@@ -9,5 +9,6 @@ public partial class Profile : ContentPage
 		InitializeComponent();
 		this.BindingContext = vm;
         Loaded += vm.GetUser;
+		Appearing += vm.GetUser;
     }
 }

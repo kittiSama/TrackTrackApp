@@ -23,6 +23,7 @@ namespace TrackTrackApp.ViewModels
         public ICommand QuerySubmitButton { get; protected set; }
         public ICommand DatapageButton { get; protected set; }
         public ICommand ProfileButton { get; protected set; }
+        public ICommand SignOutButton {  get; protected set; }
         public EventHandler GetUser {  get; protected set; }
 
         private User sessionUser;
@@ -47,13 +48,14 @@ namespace TrackTrackApp.ViewModels
             searchTypes = new ObservableCollection<string> { "Album Title", "Artist Name", "Label Name", "Genre", "Style", "Country", "Year" };
             chosenType = "Album Title";
 
-            GetUser = new EventHandler(async (s, e) => { SessionUser = await service.GetSessionUser(); WelcomeMessage = "Welcome " + SessionUser.Name; });
+            GetUser = new EventHandler(async (s, e) => { SessionUser = await service.GetSessionUser(); WelcomeMessage = "Welcome " + SessionUser.Name; Query = ""; friendIDQuery = ""; });
             //+"&SType="+chosenType
 
             QuerySubmitButton = new Command(async () => {await Shell.Current.GoToAsync("//SearchPage" + "?QNSType=" + Query + "~" + chosenType); });//transfers to search page
             DatapageButton = new Command(async () => await Shell.Current.GoToAsync("//DataPage"));
             FriendIDSubmit = new Command(async () => await Shell.Current.GoToAsync("//FriendDataPage?friendID=" + friendIDQuery));
             ProfileButton = new Command(async () => await Shell.Current.GoToAsync("//Profile"));
+            SignOutButton = new Command(async () => { await service.SignOut(); await Shell.Current.GoToAsync("//MainPage"); });
         }
 
     }

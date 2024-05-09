@@ -8,7 +8,7 @@
     Title="Profile"
     x:DataType="viewModels:ProfileViewModel">
 
-    <VerticalStackLayout>
+    <VerticalStackLayout Margin="20,20,20,20" Spacing="20">
         <Button
             BackgroundColor="#FF453251"
             Command="{Binding BackButton}"
@@ -17,12 +17,67 @@
             Text="Go Back ⏎"
             WidthRequest="120" />
 
-        <Entry Text="{Binding SessionUser.Name}" />
-        <Entry Text="{Binding SessionUser.Password}" />
-        <Entry Text="{Binding SessionUser.Email}" />
-        <Entry Text="{Binding SessionUser.Bio}" />
+        <Label
+            FontFamily="concertOne"
+            FontSize="Header"
+            HorizontalOptions="Center"
+            Text="Your Profile" />
 
-        <Button Command="{Binding SubmitChangesCommand}" Text="Submit Changes" />
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+            <Label
+                FontSize="Title"
+                Text="Name:"
+                VerticalOptions="Center" />
+            <Entry
+                FontSize="Subtitle"
+                Text="{Binding SessionUser.Name}"
+                WidthRequest="300" />
+
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+            <Label
+                FontSize="Title"
+                Text="Password:"
+                VerticalOptions="Center" />
+            <Entry
+                FontSize="Subtitle"
+                Text="{Binding SessionUser.Password}"
+                WidthRequest="300" />
+
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+            <Label
+                FontSize="Title"
+                Text="Email:"
+                VerticalOptions="Center" />
+            <Entry
+                FontSize="Subtitle"
+                Text="{Binding SessionUser.Email}"
+                WidthRequest="300" />
+
+
+        </HorizontalStackLayout>
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+            <Label
+                FontSize="Title"
+                Text="Bio:"
+                VerticalOptions="Center" />
+            <Entry
+                FontSize="Subtitle"
+                Text="{Binding SessionUser.Bio}"
+                WidthRequest="800" />
+
+        </HorizontalStackLayout>
+
+        <Button
+            Command="{Binding SubmitChangesCommand}"
+            FontSize="Title"
+            Text="Submit Changes"
+            WidthRequest="300" />
+
+        <Entry IsVisible="{Binding successfullyUpdated}" Text="Successfully updated your profile!" />
 
     </VerticalStackLayout>
 </ContentPage>

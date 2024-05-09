@@ -8,5 +8,6 @@ public partial class UserMainPage : ContentPage
 		InitializeComponent();
 		this.BindingContext = vm;
 		Loaded += vm.GetUser;
+		Appearing += vm.GetUser;
 	}
 }

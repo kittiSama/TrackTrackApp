@@ -7,5 +7,7 @@ public partial class Login : ContentPage
 	{
 		InitializeComponent();
 		this.BindingContext = vm;
-	}
+        Appearing += vm.Reset;
+
+    }
 }

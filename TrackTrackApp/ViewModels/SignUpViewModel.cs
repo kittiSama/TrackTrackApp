@@ -20,6 +20,7 @@ namespace TrackTrackApp.ViewModels
         public string Email { get { return email; } set { email = value; OnPropertyChanged(); } }
         public ICommand BackButton { get; protected set; }
         public ICommand SubmitButton { get; protected set; }
+        public EventHandler Reset {  get; protected set; }
 
 
         public SignUpViewModel(TrackTrackServices service)
@@ -34,6 +35,8 @@ namespace TrackTrackApp.ViewModels
                 }
                 else { await Shell.Current.DisplayAlert("bad", "no", "sad"); }
             });
+
+            Reset = new EventHandler(async (s, e) => { Password = ""; Username = ""; Email = ""; });
 
         }
 

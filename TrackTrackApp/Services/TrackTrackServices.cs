@@ -7,6 +7,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using TrackTrackApp.Models;
+using TrackTrackApp.Views;
+//using static Java.Util.Jar.Attributes;
 
 namespace TrackTrackApp.Services
 {
@@ -199,10 +201,12 @@ namespace TrackTrackApp.Services
         {
             try
             {//fix this
-                var response = await _httpClient.GetAsync(URL + "UpdateUser?" + "id=" + user.Id + "&name=" + user.Name + "&password=" + user.Password + "&email=" + user.Email + "&bio=" + user.Bio);
+                var stringContent = new StringContent(JsonSerializer.Serialize(user, _serializerOptions), Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync(URL + "UpdateUser", stringContent);
                 string st = await response.Content.ReadAsStringAsync();
 
-                if(JsonSerializer.Deserialize<bool>(st, _serializerOptions))
+                if (JsonSerializer.Deserialize<bool>(st, _serializerOptions))
                 {
                     await SecureStorage.Default.SetAsync("CurrentUser", JsonSerializer.Serialize(user, _serializerOptions));
                     return (true);
@@ -212,6 +216,11 @@ namespace TrackTrackApp.Services
                 
             }
             catch { return false; }
+        }
+        public async Task SignOut()
+        {
+            SecureStorage.Default.Remove("CurrentUser");
+            await _httpClient.GetAsync(URL + "SignOut");
         }
     }
 }

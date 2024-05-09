@@ -18,6 +18,8 @@ namespace TrackTrackApp.ViewModels
         public ICommand BackButton { get; protected set; }
         public ICommand SubmitButton { get; protected set; }
 
+        public EventHandler Reset {  get; protected set; }
+
 
         public LoginViewModel(TrackTrackServices service)
         {
@@ -37,6 +39,9 @@ namespace TrackTrackApp.ViewModels
                     await Shell.Current.DisplayAlert("Incorrect username or password", "", "sad");
                 }
             });
+            Reset = new EventHandler(async (s, e) => { Password = ""; Username = ""; });
+
+
         }
     }
 }

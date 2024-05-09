@@ -30,6 +30,16 @@
                     Text="{Binding friendUser.Name}"
                     VerticalOptions="End" />
             </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="10">
+                <Label FontSize="Subtitle" Text="Bio:" />
+                <Label
+                    FontSize="Subtitle"
+                    LineBreakMode="WordWrap"
+                    MaxLines="-1"
+                    Text="{Binding friendUser.Bio}"
+                    WidthRequest="900" />
+
+            </HorizontalStackLayout>
 
             <Border StrokeShape="RoundRectangle 30">
                 <VerticalStackLayout Spacing="20">
