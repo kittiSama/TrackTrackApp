@@ -43,12 +43,12 @@ namespace TrackTrackApp.ViewModels
         public ICommand FriendIDSubmit { get; protected set; }
 
 
-        public UserMainPageViewModel(TrackTrackServices service)
+        public UserMainPageViewModel(TrackTrackServices service, IGeocoding geocoding)
         {
             searchTypes = new ObservableCollection<string> { "Album Title", "Artist Name", "Label Name", "Genre", "Style", "Country", "Year" };
             chosenType = "Album Title";
 
-            GetUser = new EventHandler(async (s, e) => { SessionUser = await service.GetSessionUser(); WelcomeMessage = "Welcome " + SessionUser.Name; Query = ""; friendIDQuery = ""; });
+            GetUser = new EventHandler(async (s, e) => { SessionUser = await service.GetSessionUser(); WelcomeMessage = "Welcome " + SessionUser.Name; Query = ""; friendIDQuery = ""; Query = await service.GetCurrentLocation(geocoding); });
             //+"&SType="+chosenType
 
             QuerySubmitButton = new Command(async () => {await Shell.Current.GoToAsync("//SearchPage" + "?QNSType=" + Query + "~" + chosenType); });//transfers to search page

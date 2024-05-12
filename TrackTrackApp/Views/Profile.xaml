@@ -77,7 +77,11 @@
             Text="Submit Changes"
             WidthRequest="300" />
 
-        <Entry IsVisible="{Binding successfullyUpdated}" Text="Successfully updated your profile!" />
+        <Label
+            FontSize="Subtitle"
+            HorizontalOptions="Center"
+            IsVisible="{Binding successfullyUpdated}"
+            Text="Successfully updated your profile!" />
 
     </VerticalStackLayout>
 </ContentPage>

@@ -121,10 +121,15 @@ namespace TrackTrackApp.Services
             {
                 SavedAlbum z = new SavedAlbum();
                 z.AlbumId = albumID;
+                z.Album = new AlbumDatum();
+                z.User = await GetSessionUser();
+                z.Album.Id = albumID;
+                z.Album.ArtistName = "";
+                z.Album.Country = "";
                 SaveAlbumByNameDTO dto = new SaveAlbumByNameDTO() { collectionName = "favorites", savedAlbum = z };
                 string json = JsonSerializer.Serialize(dto, _serializerOptions);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync(URL + "SaveAlbumByName", stringContent);
+                var response = await _httpClient.PostAsync(URL + "DeleteAlbumByName", stringContent);
                 if (response.IsSuccessStatusCode) { return true; }
                 return false;
             }
@@ -221,6 +226,53 @@ namespace TrackTrackApp.Services
         {
             SecureStorage.Default.Remove("CurrentUser");
             await _httpClient.GetAsync(URL + "SignOut");
+        }
+
+        private CancellationTokenSource _cancelTokenSource;
+        private bool _isCheckingLocation;
+
+        public async Task<string> GetCurrentLocation(IGeocoding geocoding)
+        {
+            try
+            {
+                
+                _isCheckingLocation = true;
+
+                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+
+                _cancelTokenSource = new CancellationTokenSource();
+
+                Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
+
+                if (location != null)
+                {
+
+                    //geocoding.SetMapServiceToken("AtCnTPhBaznCCE3PH2Dnwh8u19Ab1DMO2ImALyflGcujD5EHf5AgRIw_GbvbbSaK");
+
+
+
+                    IEnumerable<Placemark> placemarks = await geocoding.GetPlacemarksAsync(location);
+                    Placemark placemark = placemarks?.FirstOrDefault();
+                    if (placemark != null)
+                    {
+                        return placemark.CountryName.ToLower();
+                    }
+                }
+             return string.Empty;
+            }
+            
+            // Catch one of the following exceptions:
+            //   FeatureNotSupportedException
+            //   FeatureNotEnabledException
+            //   PermissionException
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+            finally
+            {
+                _isCheckingLocation = false;
+            }
         }
     }
 }

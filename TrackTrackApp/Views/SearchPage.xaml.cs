@@ -12,6 +12,7 @@ public partial class SearchPage : ContentPage
 		Appearing += vm.PopulateAlbums;
 		Loaded += vm.PopulateAlbums;
 		Appearing += vm.ResetQuery;
+		Loaded += vm.ResetQuery;
 	}
 	
 }

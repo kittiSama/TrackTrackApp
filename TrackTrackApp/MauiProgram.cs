@@ -22,7 +22,8 @@ namespace TrackTrackApp
 
                     fonts.AddFont("ConcertOne-Regular.ttf", "concertOne");
                     fonts.AddFont("Assistant-VariableFont_wght.ttf", "OpenSansRegular");
-                });
+                })
+                .ConfigureEssentials(essentials => { essentials.UseMapServiceToken("mHGgQcRoyhOhvpFjpIA5~2GxaAFppskZdgAkj8z5FfA~AqSR3b1Txbu6Lqkz5t-44I5_0Wy-oWdSfvuJCsSlpR1yg8ekLhPLiSUuMbjAAMa7"); }) ;
 
 #if DEBUG
 		builder.Logging.AddDebug();
@@ -45,6 +46,8 @@ namespace TrackTrackApp
             builder.Services.AddSingleton<ProfileViewModel>();
 
             builder.Services.AddSingleton<TrackTrackServices>();
+
+            builder.Services.AddSingleton<IGeocoding>(Geocoding.Default);
 
             Routing.RegisterRoute("MainPage", typeof(MainPage));
             return builder.Build();
