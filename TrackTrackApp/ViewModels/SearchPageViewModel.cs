@@ -30,6 +30,11 @@ namespace TrackTrackApp.ViewModels
 
         private string queryandsearchtype;
         public string QueryAndSearchType { get { return queryandsearchtype; } set { queryandsearchtype = value; OnPropertyChanged(); } }
+        
+        private bool localsearch;
+        public bool LocalSearch { get { return localsearch; } set { localsearch = value; OnPropertyChanged(); } }
+        public string LocalSearchString { get { if (LocalSearch) return "True"; else return "False"; } set { if (value == "True") LocalSearch = true; else LocalSearch = false; } }
+
 
         private ObservableCollection<AlbumAndHeart> albums;
         public ObservableCollection<AlbumAndHeart> Albums { get { return albums; } set { albums = value; OnPropertyChanged("Albums"); } }
@@ -44,7 +49,7 @@ namespace TrackTrackApp.ViewModels
         private string chosentype;
         public string chosenType { get { return chosentype; } set { chosentype = value; OnPropertyChanged(); } }
 
-        public SearchPageViewModel(TrackTrackServices service)
+        public SearchPageViewModel(TrackTrackServices service, IGeocoding geocoding)
         {
             searchTypes = new ObservableCollection<string> { "Album Title", "Artist Name", "Label Name", "Genre", "Style", "Country", "Year" };
 
@@ -57,7 +62,7 @@ namespace TrackTrackApp.ViewModels
                 if(Query!=null && SearchType != null)
                 {
                     chosenType = SearchType;
-                    var arr = await service.QueryTop5(Query, SearchType);
+                    var arr = await service.QueryTop5(Query, SearchType, LocalSearch, geocoding);
                     if (arr != null)
                     {
                         for (int i = 0; i < arr.Length; i++)
@@ -74,8 +79,7 @@ namespace TrackTrackApp.ViewModels
             SearchCommand = new Command(async () =>
             {
                 Albums = new ObservableCollection<AlbumAndHeart>(new AlbumAndHeart[5]);
-                splitQNSType();
-                var arr = await service.QueryTop5(NewQuery, chosenType);
+                var arr = await service.QueryTop5(NewQuery, chosenType, LocalSearch, geocoding);
                 if( arr!= null)
                 {
                     for (int i = 0; i < arr.Length; i++)
@@ -97,6 +101,8 @@ namespace TrackTrackApp.ViewModels
                 var z = QueryAndSearchType.Split("~");
                 Query = z[0];
                 SearchType = z[1];
+                LocalSearchString = z[2];
+                
             }
         }
 

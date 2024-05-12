@@ -36,6 +36,11 @@ namespace TrackTrackApp.ViewModels
 
         public string[] QueryAndSearchType { get { return (new string[] { query, chosenType }); } }
 
+        private bool localsearch;
+        public bool LocalSearch { get { return localsearch; } set { localsearch = value; OnPropertyChanged(); } }
+
+        public string LocalSearchString { get { if (LocalSearch) return "True"; else return "False"; } set { if (value == "True") LocalSearch = true; else LocalSearch = false; } }
+
 
         private string friendidquery;
         public string friendIDQuery { get { return friendidquery; } set { friendidquery = value; OnPropertyChanged(); } }
@@ -48,10 +53,10 @@ namespace TrackTrackApp.ViewModels
             searchTypes = new ObservableCollection<string> { "Album Title", "Artist Name", "Label Name", "Genre", "Style", "Country", "Year" };
             chosenType = "Album Title";
 
-            GetUser = new EventHandler(async (s, e) => { SessionUser = await service.GetSessionUser(); WelcomeMessage = "Welcome " + SessionUser.Name; Query = ""; friendIDQuery = ""; Query = await service.GetCurrentLocation(geocoding); });
+            GetUser = new EventHandler(async (s, e) => { SessionUser = await service.GetSessionUser(); WelcomeMessage = "Welcome " + SessionUser.Name; Query = ""; friendIDQuery = ""; LocalSearch = false; });
             //+"&SType="+chosenType
 
-            QuerySubmitButton = new Command(async () => {await Shell.Current.GoToAsync("//SearchPage" + "?QNSType=" + Query + "~" + chosenType); });//transfers to search page
+            QuerySubmitButton = new Command(async () =>  await Shell.Current.GoToAsync("//SearchPage" + "?QNSType=" + Query + "~" + chosenType + "~" + LocalSearchString));//transfers to search page
             DatapageButton = new Command(async () => await Shell.Current.GoToAsync("//DataPage"));
             FriendIDSubmit = new Command(async () => await Shell.Current.GoToAsync("//FriendDataPage?friendID=" + friendIDQuery));
             ProfileButton = new Command(async () => await Shell.Current.GoToAsync("//Profile"));

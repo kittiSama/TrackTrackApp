@@ -20,13 +20,21 @@
 
         <HorizontalStackLayout HorizontalOptions="Center" Spacing="30">
             <Label FontSize="Title" Text="Search album:" />
+
             <VerticalStackLayout>
                 <SearchBar
                     FontSize="Subtitle"
                     SearchCommand="{Binding QuerySubmitButton}"
                     Text="{Binding Query}"
                     WidthRequest="600" />
-                <Picker ItemsSource="{Binding searchTypes}" SelectedItem="{Binding chosenType}" />
+                <HorizontalStackLayout Spacing="20">
+                    <Picker ItemsSource="{Binding searchTypes}" SelectedItem="{Binding chosenType}" />
+                    <Label
+                        FontSize="Title"
+                        Text="Local Music Only"
+                        VerticalOptions="Center" />
+                    <Switch IsToggled="{Binding LocalSearch}" />
+                </HorizontalStackLayout>
 
 
             </VerticalStackLayout>
