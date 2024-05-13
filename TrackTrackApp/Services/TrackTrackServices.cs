@@ -190,16 +190,6 @@ namespace TrackTrackApp.Services
             catch { return null; }
         }
 
-        public async Task<HttpStatusCode> Hello()
-        {
-            try
-            {
-                var response = await _httpClient.GetAsync(URL + "Hello");
-                return(response.StatusCode);
-            }
-            catch { return HttpStatusCode.BadRequest; }
-        }
-
         public async Task<User> GetUserByID(long id)
         {
             try
