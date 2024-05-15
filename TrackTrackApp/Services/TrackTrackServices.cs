@@ -118,7 +118,7 @@ namespace TrackTrackApp.Services
                 SaveAlbumByNameDTO dto = new SaveAlbumByNameDTO() { collectionName = "favorites", savedAlbum = z };
                 string json = JsonSerializer.Serialize(dto, _serializerOptions);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync(URL + "SaveAlbumByName", stringContent); //error here, make it penetrate
+                var response = await _httpClient.PostAsync(URL + "SaveAlbumByName", stringContent); 
                 if(response.IsSuccessStatusCode) { return true; }
                 return false;
             }
