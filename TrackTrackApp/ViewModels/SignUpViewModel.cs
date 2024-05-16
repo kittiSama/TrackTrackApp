@@ -30,10 +30,10 @@ namespace TrackTrackApp.ViewModels
             { 
                 var resp = await service.SignUp(username, password, email);
                 
-                if(resp==System.Net.HttpStatusCode.OK) {
+                if(resp=="good") {
                     await Shell.Current.GoToAsync("//UserMainPage", true);
                 }
-                else { await Shell.Current.DisplayAlert("bad", "no", "sad"); }
+                else { await Shell.Current.DisplayAlert(resp, "no", "sad"); }
             });
 
             Reset = new EventHandler(async (s, e) => { Password = ""; Username = ""; Email = ""; });

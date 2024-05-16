@@ -25,10 +25,19 @@ namespace TrackTrackApp.ViewModels
         public ProfileViewModel(TrackTrackServices service)
         {
             supdated = false;
-            BackButton = new Command(async () => { successfullyUpdated = false;  await Shell.Current.GoToAsync("//UserMainPage"); });
+            BackButton = new Command(async () => { successfullyUpdated = false; await Shell.Current.GoToAsync("//UserMainPage"); });
             GetUser = new EventHandler(async (s, e) => { SessionUser = await service.GetSessionUser(); OnPropertyChanged(); });
 
-            SubmitChangesCommand = new Command(async () => successfullyUpdated = await service.UpdateUser(SessionUser));
+            SubmitChangesCommand = new Command(async () => { string z = (await service.UpdateUser(SessionUser));
+                if (z == ("good")) {
+                    successfullyUpdated = true;
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert(z, "no", "sad");
+
+                }
+            });
         }
     }
 }

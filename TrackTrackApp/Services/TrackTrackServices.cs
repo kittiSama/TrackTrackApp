@@ -29,7 +29,7 @@ namespace TrackTrackApp.Services
             };
         }
         
-        public async Task<HttpStatusCode> SignUp(string name, string password, string email)
+        public async Task<string> SignUp(string name, string password, string email)
         {
             User user = new User() { Name = name, Password = password, Email = email };
             var stringContent = new StringContent(JsonSerializer.Serialize(user, _serializerOptions), Encoding.UTF8, "application/json");
@@ -38,9 +38,9 @@ namespace TrackTrackApp.Services
             {
                 var response = await _httpClient.PostAsync(URL + "AddUser", stringContent);
                 await Login(name, password);
-                return (response.StatusCode);
+                return ( await response.Content.ReadAsStringAsync());
             }
-            catch { return HttpStatusCode.BadRequest; }
+            catch { return null; }
 
         }
 
@@ -201,7 +201,7 @@ namespace TrackTrackApp.Services
             catch { return null; }
         }
 
-        public async Task<bool> UpdateUser(User user)
+        public async Task<string> UpdateUser(User user)
         {
             try
             {//fix this
@@ -210,16 +210,16 @@ namespace TrackTrackApp.Services
                 var response = await _httpClient.PostAsync(URL + "UpdateUser", stringContent);
                 string st = await response.Content.ReadAsStringAsync();
 
-                if (JsonSerializer.Deserialize<bool>(st, _serializerOptions))
+                if (st=="good")
                 {
                     await SecureStorage.Default.SetAsync("CurrentUser", JsonSerializer.Serialize(user, _serializerOptions));
-                    return (true);
+                    return ("good");
                 }
                 
-                return false;
+                return await response.Content.ReadAsStringAsync();
                 
             }
-            catch { return false; }
+            catch { return "something bad happened"; }
         }
         public async Task SignOut()
         {
